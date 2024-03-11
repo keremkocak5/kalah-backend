@@ -1,0 +1,7 @@
+create table PLAYER(
+ID INTEGER not null primary key,
+GAME_ID INTEGER not null,
+PLAYER_SIDE VARCHAR(15) not null,
+PLAYER_NAME VARCHAR(255) not null,
+CREATION_DATE TIMESTAMP not null
+)

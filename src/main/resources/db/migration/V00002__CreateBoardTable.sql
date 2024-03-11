@@ -1,0 +1,11 @@
+create table BOARD(
+ID INTEGER not null primary key,
+GAME_ID INTEGER not null,
+PIT INTEGER not null,
+PLAYER_SIDE VARCHAR(15)  not null,
+TOKEN_COUNT INTEGER not null,
+KALAH BOOLEAN not null,
+CREATION_DATE TIMESTAMP not null,
+UPDATE_DATE TIMESTAMP
+)
+
