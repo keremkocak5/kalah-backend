@@ -3,7 +3,7 @@ package com.kocak.kalah.enums;
 public enum GameStatus {
 
     INITIALIZED,
-    RUNNING,
+    PLAYING,
     OVER;
 
 }

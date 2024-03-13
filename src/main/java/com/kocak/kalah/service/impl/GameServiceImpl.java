@@ -2,6 +2,8 @@ package com.kocak.kalah.service.impl;
 
 import com.kocak.kalah.enums.PlayerSide;
 import com.kocak.kalah.model.dto.incoming.CreateGameRequestDto;
+import com.kocak.kalah.model.dto.outgoing.BoardResponseDto;
+import com.kocak.kalah.model.dto.outgoing.GameResponseDto;
 import com.kocak.kalah.model.entity.Board;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.model.entity.Player;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.kocak.kalah.util.Util.initialPitTokenCount;
 import static com.kocak.kalah.util.Util.isKalah;
@@ -31,13 +34,14 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
-    public Game createGame(CreateGameRequestDto createGameDto) {
+    public GameResponseDto createGame(CreateGameRequestDto createGameDto) {
         try {
             Game game = new Game(createGameDto.pitCount(), createGameDto.againstComputer());
             gameRepository.save(game);
-            playerRepository.saveAll(List.of(new Player(game.getId(), PlayerSide.A, createGameDto.playerAName()), new Player(game.getId(), PlayerSide.B, createGameDto.playerBName())));
-            createBoard(game, createGameDto.pitCount());
-            return game;
+            playerRepository.saveAll(List.of(new Player(game.getId(), PlayerSide.BLUE, createGameDto.playerAName()), new Player(game.getId(), PlayerSide.RED, createGameDto.playerBName())));
+            List<Board>  boards = createBoard(game, createGameDto.pitCount());
+            return new GameResponseDto(game.getPitCount(), game.getId(), "kerem", "koc", game.getTurn(), game.getStatus(),
+                    boards.stream().map(board -> new BoardResponseDto(board.getId(), board.getPit(), board.getTokenCount(), board.getPlayerSide(), board.isKalah())).collect(Collectors.toList()));
         } catch (Exception e) {
             log.error("", e);
             return null;
@@ -45,12 +49,12 @@ public class GameServiceImpl implements GameService {
     }
 
     // kerem bunu board servisine al useri de oyle
-    private void createBoard(Game game, short pitCount) {
+    private List<Board>  createBoard(Game game, short pitCount) {
         List<Board> boards = new ArrayList<>();
         for (short pit = 1; pit <= 2 + (pitCount * 2); pit++) {
-            boards.add(new Board(game, pit, pit <= pitCount+1 ? PlayerSide.A : PlayerSide.B, isKalah(pitCount, pit) ? 0 : initialPitTokenCount, isKalah(pitCount, pit)));
+            boards.add(new Board(game, pit, pit <= pitCount+1 ? PlayerSide.BLUE : PlayerSide.RED, isKalah(pitCount, pit) ? 0 : initialPitTokenCount, isKalah(pitCount, pit)));
         }
-        boardRepository.saveAll(boards);
+        return boardRepository.saveAll(boards);
     }
 
 

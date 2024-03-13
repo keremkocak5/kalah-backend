@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @ToString
 @NoArgsConstructor
-public class Board implements Comparable<Board> {
+public class Board /*implements Comparable<Board>*/ {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,9 +53,9 @@ public class Board implements Comparable<Board> {
         this.tokenCount = tokenCount;
         this.kalah = kalah;
     }
-
+/*
     @Override
     public int compareTo(Board o) {
         return o.pit > this.pit ? 1 : -1;
-    }
+    }*/
 }

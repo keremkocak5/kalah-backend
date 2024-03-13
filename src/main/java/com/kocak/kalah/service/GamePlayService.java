@@ -1,10 +1,11 @@
 package com.kocak.kalah.service;
 
-import com.kocak.kalah.model.dto.incoming.MakeMoveRequestDto;
+import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
 import com.kocak.kalah.model.dto.outgoing.BoardResponseDto;
 
 public interface GamePlayService {
 
-    BoardResponseDto makeMove(MakeMoveRequestDto makeMoveDto);
+    BoardHeaderResponseDto makeMove(long gameId, short pit);
 
+    BoardHeaderResponseDto getBoard(long gameId);
 }

@@ -15,36 +15,35 @@ import static com.kocak.kalah.util.Util.pickRandomPlayer;
 @Table(name = "GAME")
 @Getter
 @EqualsAndHashCode
-@ToString
 @NoArgsConstructor
 public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
-    public Long id;
+    private Long id;
 
     @Column(name = "STATUS", nullable = false)
     @Enumerated(EnumType.STRING )
-    public GameStatus status;
+    private GameStatus status;
 
     @Column(name = "TURN", nullable = false)
     @Enumerated(EnumType.STRING )
-    public PlayerSide turn;
+    private PlayerSide turn;
 
     @Column(name = "WINNER")
     @Enumerated(EnumType.STRING )
-    public PlayerSide winner;
+    private PlayerSide winner;
 
     @Column(name = "PIT_COUNT", nullable = false)
-    public int pitCount;
+    private int pitCount;
 
     @Column(name = "AGAINST_COMPUTER", nullable = false)
-    public boolean againstComputer;
+    private boolean againstComputer;
 
     @Column(name = "CREATION_DATE", nullable = false)
     @CreationTimestamp
-    public LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
     @Setter
