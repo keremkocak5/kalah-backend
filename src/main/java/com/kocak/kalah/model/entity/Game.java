@@ -57,7 +57,7 @@ public class Game {
     }
 
     public int getModuloPitCount() {
-        return (this.getPitCount()*2)+1;
+        return (this.getPitCount()*2)+2;
     }
 
 }

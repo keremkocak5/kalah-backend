@@ -51,8 +51,8 @@ public class GameServiceImpl implements GameService {
     // kerem bunu board servisine al useri de oyle
     private List<Board>  createBoard(Game game, short pitCount) {
         List<Board> boards = new ArrayList<>();
-        for (short pit = 1; pit <= 2 + (pitCount * 2); pit++) {
-            boards.add(new Board(game, pit, pit <= pitCount+1 ? PlayerSide.BLUE : PlayerSide.RED, isKalah(pitCount, pit) ? 0 : initialPitTokenCount, isKalah(pitCount, pit)));
+        for (short pit = 0; pit <= 1 + (pitCount * 2); pit++) {
+            boards.add(new Board(game, pit, pit <= pitCount ? PlayerSide.BLUE : PlayerSide.RED, isKalah(pitCount, pit) ? 0 : initialPitTokenCount, isKalah(pitCount, pit)));
         }
         return boardRepository.saveAll(boards);
     }

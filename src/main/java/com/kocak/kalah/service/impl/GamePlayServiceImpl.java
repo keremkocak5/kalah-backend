@@ -56,7 +56,7 @@ public class GamePlayServiceImpl implements GamePlayService {
                     board.getTokenCount(),
                     board.getPlayerSide(),
                     board.isKalah()
-            )).collect(Collectors.toUnmodifiableList()), PlayerSide.RED); // kerem dikkat
+            )).collect(Collectors.toUnmodifiableList()), boardRepository.findByGameId(gameId).get(0).getGame().getTurn()); // kerem!!!!!!! dikkat
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
             // kerem
