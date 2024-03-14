@@ -19,32 +19,32 @@ public class Board /*implements Comparable<Board>*/ {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
-    public Long id;
+    private Long id;
 
     @JoinColumn(name = "GAME_ID", referencedColumnName = "ID", nullable = false, unique = true)
     @ManyToOne()
-    public Game game;
+    private Game game;
 
     @Column(name = "PIT", nullable = false)
-    public int pit;
+    private int pit;
 
     @Column(name = "PLAYER_SIDE", nullable = false)
     @Enumerated(EnumType.STRING )
-    public PlayerSide playerSide;
+    private PlayerSide playerSide;
 
     @Column(name = "TOKEN_COUNT", nullable = false)
-    public int tokenCount;
+    private int tokenCount;
 
     @Column(name = "KALAH", nullable = false)
-    public boolean kalah;
+    private boolean kalah;
 
     @Column(name = "CREATION_DATE", nullable = false)
     @CreationTimestamp
-    public LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     @Column(name = "UPDATE_DATE", nullable = false)
     @UpdateTimestamp
-    public LocalDateTime updateDate;
+    private LocalDateTime updateDate;
 
     public Board(Game game, short pit, PlayerSide playerSide, int tokenCount, boolean kalah) {
         this.game = game;
@@ -52,6 +52,14 @@ public class Board /*implements Comparable<Board>*/ {
         this.playerSide = playerSide;
         this.tokenCount = tokenCount;
         this.kalah = kalah;
+    }
+
+    public void incrementTokenCount() {
+        this.tokenCount++;
+    }
+
+    public void resetTokenCount() {
+        this.tokenCount = 0;
     }
 /*
     @Override

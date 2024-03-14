@@ -13,7 +13,7 @@ public class GameOver implements GamePlayRule {
     @Override
     public Game apply(Game game, short pit) {
         List<Board> bb = game.getBoards(); // map yapalim
-        bb.stream().forEach(x-> x.tokenCount++);
+        bb.stream().forEach(x-> x.getTokenCount());
         return game;
     }
 }

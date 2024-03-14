@@ -8,7 +8,7 @@ public class Util {
     }
 
     public static final PlayerSide pickRandomPlayer() {
-        return PlayerSide.RED; //Arrays.stream(PlayerSide.values()).toList().get((int) Math.random() * (2 - 1)); kerem
+        return PlayerSide.BLUE; //Arrays.stream(PlayerSide.values()).toList().get((int) Math.random() * (2 - 1)); kerem
     }
 
     public static boolean isKalah(short pitCount, short pit) {

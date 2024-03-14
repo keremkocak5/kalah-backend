@@ -26,12 +26,12 @@ public class GameplayController {
             @ApiResponse(responseCode = "200", description = "Movement complete.")
     })
     @PostMapping(path = "/gameId/{gameId}/pit/{pit}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BoardHeaderResponseDto> makeMove(@NonNull @PathVariable(value = "gameId") long gameId,
+    ResponseEntity<BoardHeaderResponseDto> postMove(@NonNull @PathVariable(value = "gameId") long gameId,
                                               @NonNull @PathVariable(value = "pit") short pit) {
         return new ResponseEntity<>(gamePlayService.makeMove(gameId, pit), HttpStatus.OK);
     }
 
-    @Operation(summary = "Make a movement.")
+    @Operation(summary = "Make a movement.") // kerem
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Movement complete.")
     })

@@ -7,6 +7,7 @@ import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.repository.BoardRepository;
 import com.kocak.kalah.repository.GameRepository;
 import com.kocak.kalah.rule.impl.Sow;
+import com.kocak.kalah.rule.impl.Sow2;
 import com.kocak.kalah.service.GamePlayService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class GamePlayServiceImpl implements GamePlayService {
 
     private final GameRepository gameRepository;
     private final BoardRepository boardRepository;
-    private final Sow makeMove;
+    private final Sow2 makeMove;
 
     @Override
     @Transactional
@@ -37,7 +38,7 @@ public class GamePlayServiceImpl implements GamePlayService {
         // board geri dondur
         Optional<Game> game = gameRepository.findById(gameId);
         makeMove.apply(game.get(), pit);
-        return new BoardHeaderResponseDto(game.get().getBoards().stream().map(board -> new BoardResponseDto(
+        return new BoardHeaderResponseDto(game.get().getBoards().stream().map(board -> new BoardResponseDto( // buraya mapper
                 board.getId(),
                 board.getPit(),
                 board.getTokenCount(),
@@ -55,7 +56,7 @@ public class GamePlayServiceImpl implements GamePlayService {
                     board.getTokenCount(),
                     board.getPlayerSide(),
                     board.isKalah()
-            )).collect(Collectors.toUnmodifiableList()), PlayerSide.BLUE); // kerem dikkat
+            )).collect(Collectors.toUnmodifiableList()), PlayerSide.RED); // kerem dikkat
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
             // kerem

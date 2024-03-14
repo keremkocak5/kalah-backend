@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,16 +20,16 @@ public class Sow implements GamePlayRule {
     private final BoardRepository boardRepository;
 
     @Override
-    public Game apply(Game game, short pit) {
+    public Game apply(Game game, short pit) { // kerem coklu hibernate dikkat!!!
         int pitt = new Integer(pit);
         List<Board> boards1 = game.getBoards(); // map yapalim
-        Map<Integer, Board> boards = boards1.stream().collect(Collectors.toMap(p-> p.pit, p-> p ));
+        Map<Integer, Board> boards = boards1.stream().collect(Collectors.toMap(p-> p.getPit(), p-> p ));
         System.out.println(boards.get(pitt));
-        int tokenCount1 = boards.get(pitt).tokenCount;
-        boards.get(pitt).tokenCount = 0;
+        int tokenCount1 = boards.get(pitt).getTokenCount();
+        //boards.get(pitt).tokenCount = 0;
         int max = (game.getPitCount()*2)+2;
         int i=(pitt%max)+1;//       (pitt+1%max)+1;
-
+/*
         while (tokenCount1 > 0) {
             tokenCount1--;
 
@@ -39,12 +40,16 @@ public class Sow implements GamePlayRule {
             }
             i=(i%max)+1;
         }
+        //x.andThen(x).apply(kerem)
+        */
 
         return game;
     }
 
+    Function<String, String> x = x -> "xxx";
+
     private Board yy(List<Board> b, int pit) {
-        return b.stream().filter(board -> board.pit == pit).findFirst().get();
+        return b.stream().filter(board -> board.getPit() == pit).findFirst().get();
     }
 
     private int incrementBy(int tokenCount, int startIndex, int currentIndex, int total) {

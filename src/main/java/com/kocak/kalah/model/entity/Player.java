@@ -19,21 +19,21 @@ public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID", nullable = false)
-    public Long id;
+    private Long id;
 
     @Column(name = "GAME_ID", nullable = false)
-    public Long gameId;
+    private Long gameId;
 
     @Column(name = "PLAYER_SIDE", nullable = false)
     @Enumerated(EnumType.STRING )
-    public PlayerSide playerSide;
+    private PlayerSide playerSide;
 
     @Column(name = "PLAYER_NAME", nullable = false)
-    public String playerName;
+    private String playerName;
 
     @Column(name = "CREATION_DATE", nullable = false)
     @CreationTimestamp
-    public LocalDateTime creationDate;
+    private LocalDateTime creationDate;
 
     public Player(long gameId, PlayerSide playerSide, String playerName) {
         this.playerName = playerName;

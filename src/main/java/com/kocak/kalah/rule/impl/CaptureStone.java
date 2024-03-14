@@ -10,7 +10,7 @@ public class CaptureStone implements GamePlayRule {
 
     @Override
     public Game apply(Game game, short pit) {
-        if(game.getBoards().get(pit).tokenCount == game.getPitCount()-pit) {
+        if(game.getBoards().get(pit).getTokenCount() == game.getPitCount()-pit) {
             // switch side
         } else {
             // dont switch side
