@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.kocak.kalah.util.Util.initialPitTokenCount;
+import static com.kocak.kalah.util.Util.INITIAL_PIT_TOKEN_COUNT;
 import static com.kocak.kalah.util.Util.isKalah;
 
 @Service
@@ -52,7 +52,7 @@ public class GameServiceImpl implements GameService {
     private List<Board>  createBoard(Game game, short pitCount) {
         List<Board> boards = new ArrayList<>();
         for (short pit = 0; pit <= 1 + (pitCount * 2); pit++) {
-            boards.add(new Board(game, pit, pit <= pitCount ? PlayerSide.BLUE : PlayerSide.RED, isKalah(pitCount, pit) ? 0 : initialPitTokenCount, isKalah(pitCount, pit)));
+            boards.add(new Board(game, pit, pit <= pitCount ? PlayerSide.BLUE : PlayerSide.RED, isKalah(pitCount, pit) ? 0 : INITIAL_PIT_TOKEN_COUNT, isKalah(pitCount, pit)));
         }
         return boardRepository.saveAll(boards);
     }

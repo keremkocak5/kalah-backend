@@ -2,8 +2,6 @@ package com.kocak.kalah.util;
 
 import com.kocak.kalah.enums.PlayerSide;
 
-import java.util.Arrays;
-
 public class Util {
 
     private Util() {
@@ -17,7 +15,7 @@ public class Util {
         return pit % (pitCount+1) == pitCount;
     }
 
-    public static final int initialPitTokenCount = 4;
+    public static final int INITIAL_PIT_TOKEN_COUNT = 4;
 
 
 }

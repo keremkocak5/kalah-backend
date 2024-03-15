@@ -24,10 +24,10 @@ public class Sow2 implements GamePlayRule {
         boards.get(pit).resetTokenCount();
 
         for (int i = pit+1; i < tokenCountBeforeReset+pit+1; i++) {
-            if (boards.get(i % game.getModuloPitCount()).isKalah() && !boards.get(i % game.getModuloPitCount()).getPlayerSide().equals(game.getTurn())) { // kerem buralar elden gecsin
+            if (boards.get(i % game.getEffectivePitCount()).isKalah() && !boards.get(i % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) { // kerem buralar elden gecsin
                 i++;
             }
-            boards.get(i % game.getModuloPitCount()).incrementTokenCount();
+            boards.get(i % game.getEffectivePitCount()).incrementTokenCount();
         }
         return game;
     }

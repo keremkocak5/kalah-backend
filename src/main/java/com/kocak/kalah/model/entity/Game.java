@@ -56,7 +56,7 @@ public class Game {
         this.turn = pickRandomPlayer();
     }
 
-    public int getModuloPitCount() {
+    public int getEffectivePitCount() {
         return (this.getPitCount()*2)+2;
     }
 
