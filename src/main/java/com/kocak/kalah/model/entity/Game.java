@@ -10,6 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import static com.kocak.kalah.util.Util.getRandomPlayer;
 
@@ -48,7 +49,8 @@ public class Game {
     private LocalDateTime creationDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
-    private List<Board> boards;
+    @MapKeyColumn(name="PIT")
+    private Map<Integer, Board> boards;
 
     public Game(int pitCount, boolean againstComputer) {
         this.againstComputer = againstComputer;

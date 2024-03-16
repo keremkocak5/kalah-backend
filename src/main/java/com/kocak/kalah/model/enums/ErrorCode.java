@@ -4,10 +4,11 @@ import org.springframework.http.HttpStatus;
 
 public enum ErrorCode {
 
+    NO_SUCH_GAME_FOUND("E0000", "This game does now exist.", HttpStatus.UNPROCESSABLE_ENTITY),
     GAME_NOT_ACTIVE("E0001", "This game is already over.", HttpStatus.UNPROCESSABLE_ENTITY),
-    NOT_USERS_TURN("E0002", "This is another users turn.", HttpStatus.UNPROCESSABLE_ENTITY),
-    PIT_COUNT_ZERO("E0003", "This pit has no tokens.", HttpStatus.UNPROCESSABLE_ENTITY),
-    NOT_USERS_PIT("E0004", "This pit belongs to another player.", HttpStatus.UNPROCESSABLE_ENTITY);
+    NO_SUCH_PIT_FOUND("E0003", "This pit does not exist in this board.", HttpStatus.UNPROCESSABLE_ENTITY),
+    NOT_USERS_TURN("E0004", "This is another users turn.", HttpStatus.UNPROCESSABLE_ENTITY),
+    TOKEN_COUNT_ZERO("E0005", "This pit has no tokens.", HttpStatus.UNPROCESSABLE_ENTITY);
 
     private final String errorCode;
     private final String errorMessage;

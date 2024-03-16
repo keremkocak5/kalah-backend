@@ -5,11 +5,10 @@ import com.kocak.kalah.rule.Ruleable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class Rule6GameOver implements Ruleable {
+public class Rule7GameOver implements Ruleable {
 
     @Override
     public Ruleable applyRule(Game game, int pit) {
-        System.out.println("ishameover");
         return getNextRule();
     }
 

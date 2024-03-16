@@ -7,17 +7,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class Rule2PitCountZero implements Ruleable {
+public class Rule6SwitchTurn implements Ruleable {
 
-    private final Rule3Sow sow;
+    private final Rule7GameOver gameOver;
 
     @Override
     public Ruleable applyRule(Game game, int pit) {
-        System.out.println("r2");
+        game.switchSide();
         return getNextRule();
     }
 
     private Ruleable getNextRule() {
-        return sow;
+        return gameOver;
     }
 }

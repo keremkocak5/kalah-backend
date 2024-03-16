@@ -9,19 +9,19 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class Rule0GameActive implements Ruleable {
+public class Rule3TokenCountZero implements Ruleable {
 
-    private final Rule3TokenCountZero pitCountZero;
+    private final Rule4Sow sow;
 
     @Override
     public Ruleable applyRule(Game game, int pit) {
-        if (!game.isActive()) {
-            throw new KalahRuntimeException(ErrorCode.GAME_NOT_ACTIVE);
+        if (game.getBoards().get(pit).getTokenCount() == 0) {
+            throw new KalahRuntimeException(ErrorCode.TOKEN_COUNT_ZERO);
         }
         return getNextRule();
     }
 
     private Ruleable getNextRule() {
-        return pitCountZero;
+        return sow;
     }
 }

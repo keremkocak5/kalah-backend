@@ -1,8 +1,10 @@
 package com.kocak.kalah.service.impl;
 
+import com.kocak.kalah.exception.KalahRuntimeException;
 import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
 import com.kocak.kalah.model.dto.outgoing.BoardResponseDto;
 import com.kocak.kalah.model.entity.Game;
+import com.kocak.kalah.model.enums.ErrorCode;
 import com.kocak.kalah.repository.BoardRepository;
 import com.kocak.kalah.repository.GameRepository;
 import com.kocak.kalah.rule.Ruleable;
@@ -13,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,25 +29,22 @@ public class PlayServiceImpl implements PlayService {
     @Override
     @Transactional
     public BoardHeaderResponseDto makeMove(long gameId, short pit) {
-        // gelen talebi valide et: oyun var mi?
-        // oyun varsa, talep edilen pit numarasi kisiye ozel mi? kisiye ozelse, dolu mu? oyun statusu nedir
-        // oyna.
-        // kontrolleri yap, ucluyu calistir
-        // oyuncu degismesi gerekiyorsa degistir
-        // oyun bitti mi diye kontrol et. kazanma varsa kazanma operasyonu
-        // board geri dondur
-        Optional<Game> game = gameRepository.findById(gameId);
-        Ruleable ruleable = rule0GameActive;
-        while (ruleable != null) {
-            ruleable = ruleable.applyRule(game.get(), new Integer(pit));
+        try {
+            Game game = gameRepository.findById(gameId).orElseThrow(() -> new KalahRuntimeException(ErrorCode.NO_SUCH_GAME_FOUND));
+            Ruleable nextRule = rule0GameActive;
+            while (nextRule != null) {
+                nextRule = nextRule.applyRule(game, new Integer(pit));
+            }
+            return new BoardHeaderResponseDto(game.getBoards().entrySet().stream().map(board -> new BoardResponseDto( // buraya mapper
+                    board.getValue().getId(),
+                    board.getValue().getPit(),
+                    board.getValue().getTokenCount(),
+                    board.getValue().getPlayerSide(),
+                    board.getValue().isKalah()
+            )).collect(Collectors.toUnmodifiableList()), game.getTurn());
+        } catch (Exception e) {
+            // kerem burayi doldur ve diglerlerini buna benzet
         }
-        return new BoardHeaderResponseDto(game.get().getBoards().stream().map(board -> new BoardResponseDto( // buraya mapper
-                board.getId(),
-                board.getPit(),
-                board.getTokenCount(),
-                board.getPlayerSide(),
-                board.isKalah()
-        )).collect(Collectors.toUnmodifiableList()), game.get().getTurn());
     }
 
     @Override

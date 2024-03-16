@@ -21,4 +21,13 @@ public class Util {
         return pit % (pitCount + 1) == pitCount;
     }
 
+
+    // gelen talebi valide et: oyun var mi?
+    // oyun varsa, talep edilen pit numarasi kisiye ozel mi? kisiye ozelse, dolu mu? oyun statusu nedir
+    // oyna.
+    // kontrolleri yap, ucluyu calistir
+    // oyuncu degismesi gerekiyorsa degistir
+    // oyun bitti mi diye kontrol et. kazanma varsa kazanma operasyonu
+    // board geri dondur
+    // id uuid olsun mu
 }
