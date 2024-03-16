@@ -6,10 +6,10 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Map;
 
 import static com.kocak.kalah.util.Util.getRandomPlayer;
@@ -28,6 +28,7 @@ public class Game {
 
     @Column(name = "STATUS", nullable = false)
     @Enumerated(EnumType.STRING)
+    @Setter
     private GameStatus status;
 
     @Column(name = "TURN", nullable = false)
@@ -36,6 +37,7 @@ public class Game {
 
     @Column(name = "WINNER")
     @Enumerated(EnumType.STRING)
+    @Setter
     private PlayerSide winner;
 
     @Column(name = "PIT_COUNT", nullable = false)
@@ -49,7 +51,7 @@ public class Game {
     private LocalDateTime creationDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
-    @MapKeyColumn(name="PIT")
+    @MapKeyColumn(name = "PIT")
     private Map<Integer, Board> boards;
 
     public Game(int pitCount, boolean againstComputer) {
@@ -63,14 +65,16 @@ public class Game {
         return (this.getPitCount() * 2) + 2;
     }
 
-    public Game switchSide() {
+    public void switchSide() {
         this.turn = this.turn.nextSide();
-        return this;
     }
 
     public boolean isActive() {
         return GameStatus.ACTIVE.equals(this.status);
     }
 
+    public int getOppositePit(int pit) {
+        return (pit + this.pitCount)%this.getEffectivePitCount();
+    }
 
 }

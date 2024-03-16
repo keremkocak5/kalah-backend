@@ -7,21 +7,23 @@ import com.kocak.kalah.rule.Ruleable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class Rule3TokenCountZero implements Ruleable {
 
-    private final Rule4Sow sow;
+    private final Rule4Sow rule4Sow;
 
     @Override
-    public Ruleable applyRule(Game game, int pit) {
+    public Optional<Ruleable> applyRule(Game game, int pit) {
         if (game.getBoards().get(pit).getTokenCount() == 0) {
             throw new KalahRuntimeException(ErrorCode.TOKEN_COUNT_ZERO);
         }
-        return getNextRule();
+        return Optional.of(getNextRule());
     }
 
     private Ruleable getNextRule() {
-        return sow;
+        return rule4Sow;
     }
 }

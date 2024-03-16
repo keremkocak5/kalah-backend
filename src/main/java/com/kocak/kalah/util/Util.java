@@ -2,9 +2,6 @@ package com.kocak.kalah.util;
 
 import com.kocak.kalah.model.enums.PlayerSide;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Random;
 
 public class Util {
@@ -30,4 +27,10 @@ public class Util {
     // oyun bitti mi diye kontrol et. kazanma varsa kazanma operasyonu
     // board geri dondur
     // id uuid olsun mu
+
+    // db index ekle
+
+    // problem details
+    // docker
+    // test container
 }

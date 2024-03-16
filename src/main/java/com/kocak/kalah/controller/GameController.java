@@ -25,7 +25,7 @@ public class GameController {
 
     @Operation(summary = "Creates a new Kalah game.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Game created.")
+            @ApiResponse(responseCode = "200", description = "Game created.") // buraya ekle kerem
     })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<GameResponseDto> createGame(@NonNull @RequestBody CreateGameRequestDto createGameDto) {

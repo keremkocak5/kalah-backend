@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/gameplay")
+@RequestMapping("/play")
 @RequiredArgsConstructor
 public class PlayController {
 
@@ -28,15 +28,5 @@ public class PlayController {
                                                     @NonNull @PathVariable(value = "pit") short pit) {
         return new ResponseEntity<>(playService.makeMove(gameId, pit), HttpStatus.OK);
     }
-
-    @Operation(summary = "Make a movement.") // kerem
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Movement complete.")
-    })
-    @GetMapping(path = "/gameId/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BoardHeaderResponseDto> getBoard(@NonNull @PathVariable(value = "gameId") long gameId) {
-        return new ResponseEntity<>(playService.getBoard(gameId), HttpStatus.OK);
-    }
-
 
 }

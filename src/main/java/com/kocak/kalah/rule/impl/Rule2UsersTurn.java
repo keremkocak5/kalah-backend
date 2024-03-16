@@ -7,21 +7,23 @@ import com.kocak.kalah.rule.Ruleable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class Rule2UsersTurn implements Ruleable {
 
-    private final Rule3TokenCountZero pitCountZero;
+    private final Rule3TokenCountZero rule3TokenCountZero;
 
     @Override
-    public Ruleable applyRule(Game game, int pit) {
+    public Optional<Ruleable> applyRule(Game game, int pit) {
         if (!game.getTurn().equals(game.getBoards().get(pit).getPlayerSide())) {
-            throw new KalahRuntimeException(ErrorCode.NOT_USERS_TURN);
+            throw new KalahRuntimeException(ErrorCode.NOT_PLAYERS_TURN);
         }
-        return getNextRule();
+        return Optional.of(getNextRule());
     }
 
     private Ruleable getNextRule() {
-        return pitCountZero;
+        return rule3TokenCountZero;
     }
 }

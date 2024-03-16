@@ -5,6 +5,8 @@ import com.kocak.kalah.rule.Ruleable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class Rule6SwitchTurn implements Ruleable {
@@ -12,9 +14,9 @@ public class Rule6SwitchTurn implements Ruleable {
     private final Rule7GameOver gameOver;
 
     @Override
-    public Ruleable applyRule(Game game, int pit) {
+    public Optional<Ruleable> applyRule(Game game, int pit) {
         game.switchSide();
-        return getNextRule();
+        return Optional.of(getNextRule());
     }
 
     private Ruleable getNextRule() {

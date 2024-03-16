@@ -7,21 +7,23 @@ import com.kocak.kalah.rule.Ruleable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class Rule1ValidPit implements Ruleable {
 
-    private final Rule3TokenCountZero pitCountZero;
+    private final Rule2UsersTurn rule2UsersTurn;
 
     @Override
-    public Ruleable applyRule(Game game, int pit) {
-        if (game.getBoards().containsKey(pit)) {
+    public Optional<Ruleable> applyRule(Game game, int pit) {
+        if (!game.getBoards().containsKey(pit)) {
             throw new KalahRuntimeException(ErrorCode.NO_SUCH_PIT_FOUND);
         }
-        return getNextRule();
+        return Optional.of(getNextRule());
     }
 
     private Ruleable getNextRule() {
-        return pitCountZero;
+        return rule2UsersTurn;
     }
 }
