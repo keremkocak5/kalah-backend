@@ -1,6 +1,8 @@
 package com.kocak.kalah.rule.impl;
 
+import com.kocak.kalah.exception.KalahRuntimeException;
 import com.kocak.kalah.model.entity.Game;
+import com.kocak.kalah.model.enums.ErrorCode;
 import com.kocak.kalah.rule.Ruleable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,9 @@ public class Rule0GameActive implements Ruleable {
 
     @Override
     public Ruleable applyRule(Game game, int pit) {
-        System.out.println("r1");
+        if (!game.isActive()) {
+            throw new KalahRuntimeException(ErrorCode.GAME_NOT_ACTIVE);
+        }
         return getNextRule();
     }
 

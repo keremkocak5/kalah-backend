@@ -1,7 +1,7 @@
 package com.kocak.kalah.model.entity;
 
-import com.kocak.kalah.enums.GameStatus;
-import com.kocak.kalah.enums.PlayerSide;
+import com.kocak.kalah.model.enums.GameStatus;
+import com.kocak.kalah.model.enums.PlayerSide;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -64,6 +64,10 @@ public class Game {
     public Game switchSide() {
         this.turn = this.turn.nextSide();
         return this;
+    }
+
+    public boolean isActive() {
+        return GameStatus.ACTIVE.equals(this.status);
     }
 
 

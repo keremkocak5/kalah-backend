@@ -1,4 +1,4 @@
-package com.kocak.kalah.enums;
+package com.kocak.kalah.model.enums;
 
 public enum PlayerSide {
 

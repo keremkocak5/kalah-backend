@@ -1,7 +1,7 @@
 package com.kocak.kalah.controller;
 
 import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
-import com.kocak.kalah.service.GamePlayService;
+import com.kocak.kalah.service.PlayService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class PlayController {
 
-    private final GamePlayService gamePlayService;
+    private final PlayService playService;
 
     @Operation(summary = "Make a movement.")
     @ApiResponses(value = {
@@ -25,8 +25,8 @@ public class PlayController {
     })
     @PostMapping(path = "/gameId/{gameId}/pit/{pit}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<BoardHeaderResponseDto> postMove(@NonNull @PathVariable(value = "gameId") long gameId,
-                                              @NonNull @PathVariable(value = "pit") short pit) {
-        return new ResponseEntity<>(gamePlayService.makeMove(gameId, pit), HttpStatus.OK);
+                                                    @NonNull @PathVariable(value = "pit") short pit) {
+        return new ResponseEntity<>(playService.makeMove(gameId, pit), HttpStatus.OK);
     }
 
     @Operation(summary = "Make a movement.") // kerem
@@ -35,9 +35,8 @@ public class PlayController {
     })
     @GetMapping(path = "/gameId/{gameId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<BoardHeaderResponseDto> getBoard(@NonNull @PathVariable(value = "gameId") long gameId) {
-        return new ResponseEntity<>(gamePlayService.getBoard(gameId), HttpStatus.OK);
+        return new ResponseEntity<>(playService.getBoard(gameId), HttpStatus.OK);
     }
-
 
 
 }

@@ -1,6 +1,6 @@
 package com.kocak.kalah.model.entity;
 
-import com.kocak.kalah.enums.PlayerSide;
+import com.kocak.kalah.model.enums.PlayerSide;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

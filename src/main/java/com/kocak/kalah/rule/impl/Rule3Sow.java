@@ -23,20 +23,17 @@ public class Rule3Sow implements Ruleable {
         Map<Integer, Board> boards = game.getBoards().stream().collect(Collectors.toMap(p -> p.getPit(), p -> p));
         int tokenCountBeforeReset = boards.get(pit).getTokenCount();
         boards.get(pit).resetTokenCount();
-        int i = pit+1;
+        int i = pit + 1;
         boolean lastIsKalah = false;
         boolean lastIsKalah2 = false;
-        while(tokenCountBeforeReset >0) {
+        while (tokenCountBeforeReset > 0) {
             if (boards.get(i % game.getEffectivePitCount()).isKalah() && !boards.get(i % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) { // kerem buralar elden gecsin
                 i++;
             }
-            if (boards.get(i % game.getEffectivePitCount()).isKalah()) {
                 lastIsKalah = boards.get(i % game.getEffectivePitCount()).isKalah();
-            } else {
-                lastIsKalah2 = boards.get(i % game.getEffectivePitCount()).getTokenCount()==0 && boards.get(i % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn()) ;
-            }
+                lastIsKalah2 = !boards.get(i % game.getEffectivePitCount()).isKalah() && boards.get(i % game.getEffectivePitCount()).getTokenCount() == 0 && boards.get(i % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn());
             boards.get(i % game.getEffectivePitCount()).incrementTokenCount();
-            tokenCountBeforeReset  --;
+            tokenCountBeforeReset--;
 
             i++;
 
@@ -45,9 +42,9 @@ public class Rule3Sow implements Ruleable {
     }
 
     private Ruleable getNextRule(boolean lastIsKalah, boolean lastIsZero) {
-        if(lastIsKalah)
+        if (lastIsKalah)
             return gameOver;
-        if(lastIsZero)
+        if (lastIsZero)
             return rule4Collect;
         return switchTurn;
     }

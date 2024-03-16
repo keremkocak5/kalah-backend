@@ -13,7 +13,7 @@ public class Rule1UsersTurn implements Ruleable {
 
     @Override
     public Ruleable applyRule(Game game, int pit) {
-        System.out.println("r1");
+        //if (game.getTurn().equals(game.getBoards().stream().map())
         return getNextRule();
     }
 

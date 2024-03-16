@@ -1,6 +1,6 @@
 package com.kocak.kalah.model.dto.outgoing;
 
-import com.kocak.kalah.enums.PlayerSide;
+import com.kocak.kalah.model.enums.PlayerSide;
 import lombok.NonNull;
 
 public record BoardResponseDto(@NonNull long id,

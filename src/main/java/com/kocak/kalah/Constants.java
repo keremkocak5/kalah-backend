@@ -2,10 +2,9 @@ package com.kocak.kalah;
 
 public class Constants {
 
-    private Constants(){
-
+    private Constants() {
     }
 
-
+    public static final int INITIAL_PIT_TOKEN_COUNT = 4;
 
 }

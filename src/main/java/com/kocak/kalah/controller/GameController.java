@@ -2,7 +2,6 @@ package com.kocak.kalah.controller;
 
 import com.kocak.kalah.model.dto.incoming.CreateGameRequestDto;
 import com.kocak.kalah.model.dto.outgoing.GameResponseDto;
-import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
