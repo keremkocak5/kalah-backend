@@ -23,7 +23,7 @@ public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
     @Column(name = "STATUS", nullable = false)
@@ -40,13 +40,13 @@ public class Game {
     @Setter
     private PlayerSide winner;
 
-    @Column(name = "PIT_COUNT", nullable = false)
+    @Column(name = "PIT_COUNT", nullable = false, updatable = false)
     private int pitCount;
 
     @Column(name = "AGAINST_COMPUTER", nullable = false)
     private boolean againstComputer;
 
-    @Column(name = "CREATION_DATE", nullable = false)
+    @Column(name = "CREATION_DATE", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime creationDate;
 
@@ -66,15 +66,23 @@ public class Game {
     }
 
     public void switchSide() {
-        this.turn = this.turn.nextSide();
+        this.turn = this.getTurn().nextSide();
     }
 
     public boolean isActive() {
-        return GameStatus.ACTIVE.equals(this.status);
+        return GameStatus.ACTIVE.equals(this.getStatus());
     }
 
     public int getOppositePit(int pit) {
-        return (pit + this.pitCount)%this.getEffectivePitCount();
+        return (pit + this.getPitCount()) % this.getEffectivePitCount();
+    }
+
+    public boolean isPitKalah(short pit) {
+        return pit % (this.getPitCount() + 1) == this.getPitCount();
+    }
+
+    public int getKalahIndex(PlayerSide playerSide) {
+        return PlayerSide.BLUE.equals(playerSide) ? this.getPitCount() + 1 : (this.getPitCount() * 2) + 1;
     }
 
 }

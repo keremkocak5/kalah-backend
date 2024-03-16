@@ -12,7 +12,7 @@ import java.util.Optional;
 public class Rule4Sow implements Ruleable {
 
     private final Rule7GameOver rule7GameOver; // kerem check names
-    private final Rule6SwitchTurn rule6SwitchTurn;
+    private final Rule6SwitchSide rule6SwitchSide;
     private final Rule5Collect rule5Collect;
 
     @Override
@@ -42,6 +42,6 @@ public class Rule4Sow implements Ruleable {
             return rule7GameOver;
         if (lastIsZero)
             return rule5Collect;
-        return rule6SwitchTurn;
+        return rule6SwitchSide;
     }
 }

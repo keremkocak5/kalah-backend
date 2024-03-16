@@ -7,5 +7,5 @@ public record BoardResponseDto(@NonNull long id,
                                @NonNull int pit,
                                @NonNull int tokenCount,
                                @NonNull PlayerSide playerSide,
-                               boolean kalah) {
+                               @NonNull boolean isKalah) {
 }

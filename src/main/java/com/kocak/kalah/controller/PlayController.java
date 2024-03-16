@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/play")
@@ -24,7 +27,7 @@ public class PlayController {
             @ApiResponse(responseCode = "200", description = "Movement complete.")
     })
     @PostMapping(path = "/gameId/{gameId}/pit/{pit}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BoardHeaderResponseDto> postMove(@NonNull @PathVariable(value = "gameId") long gameId,
+    ResponseEntity<BoardHeaderResponseDto> makeMove(@NonNull @PathVariable(value = "gameId") long gameId,
                                                     @NonNull @PathVariable(value = "pit") short pit) {
         return new ResponseEntity<>(playService.makeMove(gameId, pit), HttpStatus.OK);
     }

@@ -19,27 +19,27 @@ public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID", nullable = false)
+    @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @JoinColumn(name = "GAME_ID", referencedColumnName = "ID", nullable = false, unique = true)
+    @JoinColumn(name = "GAME_ID", referencedColumnName = "ID", nullable = false, updatable = false)
     @ManyToOne()
     private Game game;
 
-    @Column(name = "PIT", nullable = false)
+    @Column(name = "PIT", nullable = false, updatable = false)
     private int pit;
 
-    @Column(name = "PLAYER_SIDE", nullable = false)
+    @Column(name = "PLAYER_SIDE", nullable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private PlayerSide playerSide;
 
     @Column(name = "TOKEN_COUNT", nullable = false)
     private int tokenCount;
 
-    @Column(name = "KALAH", nullable = false)
+    @Column(name = "KALAH", nullable = false, updatable = false)
     private boolean kalah;
 
-    @Column(name = "CREATION_DATE", nullable = false)
+    @Column(name = "CREATION_DATE", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime creationDate;
 

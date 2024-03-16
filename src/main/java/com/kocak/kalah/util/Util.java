@@ -14,11 +14,6 @@ public class Util {
         return PlayerSide.values()[random.nextInt(2)];
     }
 
-    public static boolean isKalah(short pitCount, short pit) {
-        return pit % (pitCount + 1) == pitCount;
-    }
-
-
     // gelen talebi valide et: oyun var mi?
     // oyun varsa, talep edilen pit numarasi kisiye ozel mi? kisiye ozelse, dolu mu? oyun statusu nedir
     // oyna.

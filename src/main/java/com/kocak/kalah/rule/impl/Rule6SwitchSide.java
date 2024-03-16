@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class Rule6SwitchTurn implements Ruleable {
+public class Rule6SwitchSide implements Ruleable {
 
     private final Rule7GameOver gameOver;
 
