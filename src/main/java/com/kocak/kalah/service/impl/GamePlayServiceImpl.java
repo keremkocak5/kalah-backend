@@ -5,9 +5,12 @@ import com.kocak.kalah.model.dto.outgoing.BoardResponseDto;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.repository.BoardRepository;
 import com.kocak.kalah.repository.GameRepository;
-import com.kocak.kalah.rule2.Ruleable;
-import com.kocak.kalah.rule2.Sow;
-import com.kocak.kalah.rule2.SwitchCase;
+import com.kocak.kalah.rule.Ruleable;
+import com.kocak.kalah.rule.impl.Rule1UsersTurn;
+import com.kocak.kalah.rule2.impl.Collect;
+import com.kocak.kalah.rule2.Ruleable2;
+import com.kocak.kalah.rule2.impl.Sow;
+import com.kocak.kalah.rule2.impl.SwitchCase;
 import com.kocak.kalah.service.GamePlayService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -27,9 +29,7 @@ public class GamePlayServiceImpl implements GamePlayService {
     private final GameRepository gameRepository;
     private final BoardRepository boardRepository;
 
-    private final SwitchCase switchCase;
-    private final Sow switchCase2;
-    private final Sow sow;
+    private final Rule1UsersTurn AUsersTurn;
 
     @Override
     @Transactional
@@ -44,14 +44,19 @@ public class GamePlayServiceImpl implements GamePlayService {
         Optional<Game> game = gameRepository.findById(gameId);
         //makeMove.apply(game.get(), pit);
         //switchSide.apply(game.get(), pit);
-        List<Game> rules = List.of(switchCase, sow)
+        Ruleable ruleable = AUsersTurn;
+        while (ruleable != null) {
+            ruleable = ruleable.applyRule(game.get(), new Integer(pit));
+        }
+        /*
+        List<Game> rules = List.of(switchCase, collect, sow)
                 .stream()
                 .sorted(collectors)
-                .filter(ruleable -> ruleable.isRuleMeetsCondition(game.get(), new Integer(pit)))
+                .filter(ruleable -> ruleable.isRuleApplicable(game.get(), new Integer(pit)))
                 .sorted(collectors2)
                 .map(ruleable -> ruleable.applyRule(game.get(), new Integer(pit)))
                 .collect(Collectors.toList());
-        System.out.println(game.get().getTurn());
+        System.out.println(game.get().getTurn());*/
         return new BoardHeaderResponseDto(game.get().getBoards().stream().map(board -> new BoardResponseDto( // buraya mapper
                 board.getId(),
                 board.getPit(),
@@ -61,8 +66,8 @@ public class GamePlayServiceImpl implements GamePlayService {
         )).collect(Collectors.toUnmodifiableList()), game.get().getTurn());
     }
 
-    Comparator<Ruleable> collectors = Comparator.comparing(ruleable -> ruleable.getRuleOrder());
-    Comparator<Ruleable> collectors2 = Comparator.comparing(ruleable -> ruleable.getRuleOrder2());
+    Comparator<Ruleable2> collectors = Comparator.comparing(ruleable -> ruleable.getRuleOrder());
+    Comparator<Ruleable2> collectors2 = Comparator.comparing(ruleable -> ruleable.getRuleOrder2());
 
     @Override
     public BoardHeaderResponseDto getBoard(long gameId) {

@@ -1,10 +1,8 @@
 package com.kocak.kalah.controller;
 
 import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
-import com.kocak.kalah.model.dto.outgoing.BoardResponseDto;
 import com.kocak.kalah.service.GamePlayService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.NonNull;
@@ -17,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/gameplay")
 @RequiredArgsConstructor
-public class GameplayController {
+public class PlayController {
 
     private final GamePlayService gamePlayService;
 

@@ -1,13 +1,12 @@
 package com.kocak.kalah.enums;
 
 public enum PlayerSide {
-    BLUE, RED;
+
+    BLUE,
+    RED;
 
     public PlayerSide nextSide() {
-        if (this.equals(RED)) {
-            return BLUE;
-        }
-        return RED;
+        return this.equals(RED) ? BLUE : RED;
     }
 
 }

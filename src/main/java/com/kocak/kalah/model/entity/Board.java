@@ -2,7 +2,9 @@ package com.kocak.kalah.model.entity;
 
 import com.kocak.kalah.enums.PlayerSide;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -12,9 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "BOARD")
 @Getter
 @EqualsAndHashCode
-@ToString
 @NoArgsConstructor
-public class Board /*implements Comparable<Board>*/ {
+public class Board {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,7 +30,7 @@ public class Board /*implements Comparable<Board>*/ {
     private int pit;
 
     @Column(name = "PLAYER_SIDE", nullable = false)
-    @Enumerated(EnumType.STRING )
+    @Enumerated(EnumType.STRING)
     private PlayerSide playerSide;
 
     @Column(name = "TOKEN_COUNT", nullable = false)
@@ -58,12 +59,12 @@ public class Board /*implements Comparable<Board>*/ {
         this.tokenCount++;
     }
 
+    public void incrementTokenCount(int tokenCount) {
+        this.tokenCount += tokenCount;
+    }
+
     public void resetTokenCount() {
         this.tokenCount = 0;
     }
-/*
-    @Override
-    public int compareTo(Board o) {
-        return o.pit > this.pit ? 1 : -1;
-    }*/
+
 }

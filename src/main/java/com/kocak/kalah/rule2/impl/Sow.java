@@ -1,20 +1,22 @@
-package com.kocak.kalah.rule2;
+package com.kocak.kalah.rule2.impl;
 
 import com.kocak.kalah.model.entity.Board;
 import com.kocak.kalah.model.entity.Game;
+import com.kocak.kalah.rule2.Ruleable2;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class Sow implements Ruleable {
-    public boolean isRuleMeetsCondition(Game game, int pit) {
+public class Sow implements Ruleable2 {
 
-        System.out.println("meets  sow");
+    @Override
+    public boolean isRuleApplicable(Game game, int pit) {
         return true;
     }
 
+    @Override
     public Game applyRule(Game game, int pit) {
         System.out.println("apply sow");
         Map<Integer, Board> boards = game.getBoards().stream().collect(Collectors.toMap(p -> p.getPit(), p -> p));

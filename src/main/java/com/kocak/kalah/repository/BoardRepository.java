@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    List<Board> findByGameId(long gameId);
+    List<Board> findByGameId(long gameId); // kerem gerek var mi
 
 }
