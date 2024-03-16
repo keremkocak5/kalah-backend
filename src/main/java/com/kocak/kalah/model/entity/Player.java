@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Table(name = "PLAYER")
 @Getter
 @EqualsAndHashCode
-@ToString
 public class Player {
 
     @Id

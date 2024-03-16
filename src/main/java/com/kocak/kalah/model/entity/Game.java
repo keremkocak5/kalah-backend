@@ -52,12 +52,18 @@ public class Game {
     public Game(int pitCount, boolean againstComputer) {
         this.againstComputer = againstComputer;
         this.pitCount = pitCount;
-        this.status = GameStatus.INITIALIZED;
+        this.status = GameStatus.ACTIVE;
         this.turn = pickRandomPlayer();
     }
 
     public int getEffectivePitCount() {
         return (this.getPitCount()*2)+2;
     }
+
+    public Game switchSide() {
+        this.turn = this.turn.nextSide();
+        return this;
+    }
+
 
 }
