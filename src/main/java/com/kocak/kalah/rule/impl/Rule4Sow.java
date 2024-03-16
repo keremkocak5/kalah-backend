@@ -32,7 +32,6 @@ public class Rule4Sow implements Ruleable {
             tokenCountBeforeReset--;
 
             i++;
-
         }
         return Optional.of(getNextRule(lastIsKalah, lastIsKalah2));
     }

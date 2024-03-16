@@ -16,7 +16,7 @@ public class Rule7GameOver implements Ruleable {
         if (isGameOverForPlayer(game, PlayerSide.BLUE) || isGameOverForPlayer(game, PlayerSide.RED)) {
             int playerBlueScore = game.getBoards().get(game.getKalahIndex(PlayerSide.BLUE)).getTokenCount();
             int playerRedScore = game.getBoards().get(game.getKalahIndex(PlayerSide.RED)).getTokenCount();
-            switch (playerBlueScore - playerRedScore) {
+            switch (Integer.valueOf(playerBlueScore).compareTo(playerRedScore)) {
                 case 0 -> game.setStatus(GameStatus.OVER_DRAW);
                 case 1 -> {
                     game.setStatus(GameStatus.OVER);
