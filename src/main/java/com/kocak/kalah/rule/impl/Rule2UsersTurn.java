@@ -20,6 +20,7 @@ public class Rule2UsersTurn implements Rulable {
         if (!game.getTurn().equals(game.getBoards().get(pit).getPlayerSide())) {
             throw new KalahRuntimeException(ErrorCode.NOT_PLAYERS_TURN);
         }
+
         return Optional.of(getNextRule());
     }
 

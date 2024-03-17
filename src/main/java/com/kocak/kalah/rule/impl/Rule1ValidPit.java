@@ -20,6 +20,7 @@ public class Rule1ValidPit implements Rulable {
         if (!game.getBoards().containsKey(pit)) {
             throw new KalahRuntimeException(ErrorCode.NO_SUCH_PIT_FOUND);
         }
+
         return Optional.of(getNextRule());
     }
 

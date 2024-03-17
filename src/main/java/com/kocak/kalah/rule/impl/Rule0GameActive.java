@@ -20,6 +20,7 @@ public class Rule0GameActive implements Rulable {
         if (!game.isActive()) {
             throw new KalahRuntimeException(ErrorCode.GAME_NOT_ACTIVE);
         }
+
         return Optional.of(getNextRule());
     }
 

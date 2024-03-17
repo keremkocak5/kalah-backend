@@ -12,7 +12,7 @@ import java.util.Optional;
 public class Rule8GameOver implements Rulable {
 
     @Override
-    public Optional<Rulable> applyRule(Game game, int pit) {
+    public Optional<Rulable> applyRule(Game game, int pit) { // kerem burada hala is var!
         if (isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.BLUE) || isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.RED)) {
             int playerBlueTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.BLUE)).getTokenCount();
             int playerRedTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.RED)).getTokenCount();

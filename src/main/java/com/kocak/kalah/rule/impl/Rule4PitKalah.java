@@ -20,6 +20,7 @@ public class Rule4PitKalah implements Rulable {
         if (game.getBoards().get(pit).isKalah()) {
             throw new KalahRuntimeException(ErrorCode.CANNOT_PLAY_KALAH);
         }
+
         return Optional.of(getNextRule());
     }
 

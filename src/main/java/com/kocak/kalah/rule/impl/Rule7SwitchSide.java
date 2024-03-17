@@ -16,6 +16,7 @@ public class Rule7SwitchSide implements Rulable {
     @Override
     public Optional<Rulable> applyRule(Game game, int pit) {
         game.switchSide();
+
         return Optional.of(getNextRule());
     }
 

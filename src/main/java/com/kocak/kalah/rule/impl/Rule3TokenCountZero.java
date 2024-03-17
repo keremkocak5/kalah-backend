@@ -20,6 +20,7 @@ public class Rule3TokenCountZero implements Rulable {
         if (game.getBoards().get(pit).getTokenCount() == 0) {
             throw new KalahRuntimeException(ErrorCode.TOKEN_COUNT_ZERO);
         }
+
         return Optional.of(getNextRule());
     }
 
