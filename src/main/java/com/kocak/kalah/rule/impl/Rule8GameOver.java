@@ -3,16 +3,16 @@ package com.kocak.kalah.rule.impl;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.model.enums.GameStatus;
 import com.kocak.kalah.model.enums.PlayerSide;
-import com.kocak.kalah.rule.Ruleable;
+import com.kocak.kalah.rule.Rulable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
-public class Rule8GameOver implements Ruleable {
+public class Rule8GameOver implements Rulable {
 
     @Override
-    public Optional<Ruleable> applyRule(Game game, int pit) {
+    public Optional<Rulable> applyRule(Game game, int pit) {
         if (isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.BLUE) || isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.RED)) {
             int playerBlueTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.BLUE)).getTokenCount();
             int playerRedTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.RED)).getTokenCount();

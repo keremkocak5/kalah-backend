@@ -47,7 +47,7 @@ public class Board {
     @UpdateTimestamp
     private LocalDateTime updateDate;
 
-    public Board(Game game, short pit, PlayerSide playerSide, int tokenCount, boolean kalah) {
+    public Board(Game game, int pit, PlayerSide playerSide, int tokenCount, boolean kalah) {
         this.game = game;
         this.pit = pit;
         this.playerSide = playerSide;

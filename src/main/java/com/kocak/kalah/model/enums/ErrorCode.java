@@ -1,7 +1,10 @@
 package com.kocak.kalah.model.enums;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
+@Getter
 public enum ErrorCode {
 
     NO_SUCH_GAME_FOUND("E0000", "This game does now exist.", HttpStatus.UNPROCESSABLE_ENTITY),
@@ -12,12 +15,12 @@ public enum ErrorCode {
     CANNOT_PLAY_KALAH("E0005", "This pit is a kalah.", HttpStatus.UNPROCESSABLE_ENTITY),
     UNKNOWN_ERROR("E9999", "Unknown error, please contact the development team.", HttpStatus.INTERNAL_SERVER_ERROR);
 
-    private final String errorCode;
+    private final String errorId;
     private final String errorMessage;
-    private final HttpStatus httpStatus;
+    private final HttpStatusCode httpStatus;
 
-    ErrorCode(String errorCode, String errorMessage, HttpStatus httpStatus) {
-        this.errorCode = errorCode;
+    ErrorCode(String errorId, String errorMessage, HttpStatus httpStatus) {
+        this.errorId = errorId;
         this.errorMessage = errorMessage;
         this.httpStatus = httpStatus;
     }

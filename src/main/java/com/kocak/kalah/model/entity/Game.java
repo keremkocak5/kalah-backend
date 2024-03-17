@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 import static com.kocak.kalah.util.Util.getRandomPlayer;
@@ -43,9 +44,6 @@ public class Game {
     @Column(name = "PIT_COUNT", nullable = false, updatable = false)
     private int pitCount;
 
-    @Column(name = "AGAINST_COMPUTER", nullable = false)
-    private boolean againstComputer;
-
     @Column(name = "CREATION_DATE", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime creationDate;
@@ -54,8 +52,10 @@ public class Game {
     @MapKeyColumn(name = "PIT")
     private Map<Integer, Board> boards;
 
-    public Game(int pitCount, boolean againstComputer) {
-        this.againstComputer = againstComputer;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
+    private List<Player> players;
+
+    public Game(int pitCount) {
         this.pitCount = pitCount;
         this.status = GameStatus.ACTIVE;
         this.turn = getRandomPlayer();
@@ -74,10 +74,10 @@ public class Game {
     }
 
     public int getOppositePit(int pit) {
-        return (pit + this.getPitCount()) % this.getEffectivePitCount();
+        return (this.getPitCount() * 2) - pit;
     }
 
-    public boolean isPitKalah(short pit) {
+    public boolean isPitKalah(int pit) {
         return pit % (this.getPitCount() + 1) == this.getPitCount();
     }
 
@@ -90,7 +90,6 @@ public class Game {
     }
 
     @Transient
-    @Getter
     @Setter
     private Integer lastIndex;
 

@@ -1,7 +1,7 @@
 package com.kocak.kalah.rule.impl;
 
 import com.kocak.kalah.model.entity.Game;
-import com.kocak.kalah.rule.Ruleable;
+import com.kocak.kalah.rule.Rulable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,35 +9,34 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class Rule5Sow implements Ruleable {
+public class Rule5Sow implements Rulable {
 
     private final Rule8GameOver rule8GameOver; // kerem check names
     private final Rule7SwitchSide rule7SwitchSide;
     private final Rule6Collect rule6Collect;
 
     @Override
-    public Optional<Ruleable> applyRule(Game game, int pit) {
+    public Optional<Rulable> applyRule(Game game, int pit) {
         int tokenCountBeforeReset = game.getBoards().get(pit).getTokenCount();
         game.getBoards().get(pit).resetTokenCount();
-        int i = pit + 1; // kerem kaldire
         boolean lastIsKalah = false;
         boolean lastIsKalah2 = false;
         while (tokenCountBeforeReset > 0) {
-            if (game.getBoards().get(i % game.getEffectivePitCount()).isKalah() && !game.getBoards().get(i % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) { // kerem buralar elden gecsin
-                i++;
+            pit++;
+            if (game.getBoards().get(pit % game.getEffectivePitCount()).isKalah() && !game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) { // kerem buralar elden gecsin
+                pit++;
             }
-            lastIsKalah = game.getBoards().get(i % game.getEffectivePitCount()).isKalah();
-            lastIsKalah2 = !game.getBoards().get(i % game.getEffectivePitCount()).isKalah() && game.getBoards().get(i % game.getEffectivePitCount()).getTokenCount() == 0 && game.getBoards().get(i % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn());
-            game.getBoards().get(i % game.getEffectivePitCount()).incrementTokenCount();
+            lastIsKalah = game.getBoards().get(pit % game.getEffectivePitCount()).isKalah();
+            lastIsKalah2 = !game.getBoards().get(pit % game.getEffectivePitCount()).isKalah() && game.getBoards().get(pit % game.getEffectivePitCount()).getTokenCount() == 0 && game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn());
+            game.getBoards().get(pit % game.getEffectivePitCount()).incrementTokenCount();
             tokenCountBeforeReset--;
-
-            i++;
         }
-        game.setLastIndex(i-- % game.getEffectivePitCount());
+        game.setLastIndex(pit - 1 % game.getEffectivePitCount());
+
         return Optional.of(getNextRule(lastIsKalah, lastIsKalah2));
     }
 
-    private Ruleable getNextRule(boolean lastIsKalah, boolean lastIsZero) {
+    private Rulable getNextRule(boolean lastIsKalah, boolean lastIsZero) {
         if (lastIsKalah) {
             return rule8GameOver;
         } else if (lastIsZero) {

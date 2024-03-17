@@ -24,11 +24,14 @@ public class PlayController {
 
     @Operation(summary = "Make a movement.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Movement complete.")
+            @ApiResponse(responseCode = "200", description = "Movement complete."),
+            @ApiResponse(responseCode = "400", description = "Bad request."),
+            @ApiResponse(responseCode = "422", description = "Movement not allowed."),
+            @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
-    @PostMapping(path = "/gameId/{gameId}/pit/{pit}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BoardHeaderResponseDto> makeMove(@NonNull @PathVariable(value = "gameId") long gameId,
-                                                    @NonNull @PathVariable(value = "pit") short pit) {
+    @PostMapping(path = "/game/{game}/pit/{pit}", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<BoardHeaderResponseDto> makeMove(@NonNull @PathVariable(value = "game") long gameId,
+                                                    @NonNull @PathVariable(value = "pit") int pit) {
         return new ResponseEntity<>(playService.makeMove(gameId, pit), HttpStatus.OK);
     }
 

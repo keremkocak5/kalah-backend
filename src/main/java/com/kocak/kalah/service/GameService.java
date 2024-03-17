@@ -7,4 +7,5 @@ public interface GameService {
 
     GameResponseDto createGame(CreateGameRequestDto createGameDto);
 
+    GameResponseDto getGame(long gameId);
 }

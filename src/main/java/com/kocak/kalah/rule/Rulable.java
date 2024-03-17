@@ -4,8 +4,8 @@ import com.kocak.kalah.model.entity.Game;
 
 import java.util.Optional;
 
-public interface Ruleable {
+public interface Rulable {
 
-    Optional<Ruleable> applyRule(Game game, int pit);
+    Optional<Rulable> applyRule(Game game, int pit);
 
 }

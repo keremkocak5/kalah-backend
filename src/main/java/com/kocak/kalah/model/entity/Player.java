@@ -19,8 +19,9 @@ public class Player {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "GAME_ID", nullable = false, updatable = false)
-    private Long gameId;
+    @JoinColumn(name = "GAME_ID", referencedColumnName = "ID", nullable = false, updatable = false)
+    @ManyToOne()
+    private Game game;
 
     @Column(name = "PLAYER_SIDE", nullable = false, updatable = false)
     @Enumerated(EnumType.STRING)
@@ -33,10 +34,17 @@ public class Player {
     @CreationTimestamp
     private LocalDateTime creationDate;
 
-    public Player(long gameId, PlayerSide playerSide, String playerName) {
+    public Player(Game game, PlayerSide playerSide, String playerName) {
         this.playerName = playerName;
         this.playerSide = playerSide;
-        this.gameId = gameId;
+        this.game = game;
     }
 
+    public boolean isPlayerRed() {
+        return PlayerSide.RED.equals(this.playerSide);
+    }
+
+    public boolean isPlayerBlue() {
+        return PlayerSide.BLUE.equals(this.playerSide);
+    }
 }
