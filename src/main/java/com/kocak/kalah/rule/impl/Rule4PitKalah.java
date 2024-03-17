@@ -11,19 +11,19 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class Rule3TokenCountZero implements Ruleable {
+public class Rule4PitKalah implements Ruleable {
 
-    private final Rule4PitKalah rule4PitKalah;
+    private final Rule5Sow rule5Sow;
 
     @Override
     public Optional<Ruleable> applyRule(Game game, int pit) {
-        if (game.getBoards().get(pit).getTokenCount() == 0) {
-            throw new KalahRuntimeException(ErrorCode.TOKEN_COUNT_ZERO);
+        if (game.getBoards().get(pit).isKalah()) {
+            throw new KalahRuntimeException(ErrorCode.CANNOT_PLAY_KALAH);
         }
         return Optional.of(getNextRule());
     }
 
     private Ruleable getNextRule() {
-        return rule4PitKalah;
+        return rule5Sow;
     }
 }

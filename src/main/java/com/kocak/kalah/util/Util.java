@@ -22,7 +22,12 @@ public class Util {
     // oyun bitti mi diye kontrol et. kazanma varsa kazanma operasyonu
     // board geri dondur
     // id uuid olsun mu
+    // foreing key falan
 
+    // mysql kaldir
+    // secur'ty bak
+// onyuz isimler iki comp olsun
+    // onyuz test
     // db index ekle
 
     // problem details

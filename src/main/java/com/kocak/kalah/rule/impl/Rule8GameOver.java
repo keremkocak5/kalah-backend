@@ -9,21 +9,21 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class Rule7GameOver implements Ruleable {
+public class Rule8GameOver implements Ruleable {
 
     @Override
     public Optional<Ruleable> applyRule(Game game, int pit) {
-        if (isGameOverForPlayer(game, PlayerSide.BLUE) || isGameOverForPlayer(game, PlayerSide.RED)) {
-            int playerBlueScore = game.getBoards().get(game.getKalahIndex(PlayerSide.BLUE)).getTokenCount();
-            int playerRedScore = game.getBoards().get(game.getKalahIndex(PlayerSide.RED)).getTokenCount();
-            switch (Integer.valueOf(playerBlueScore).compareTo(playerRedScore)) {
-                case 0 -> game.setStatus(GameStatus.OVER_DRAW);
+        if (isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.BLUE) || isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.RED)) {
+            int playerBlueTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.BLUE)).getTokenCount();
+            int playerRedTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.RED)).getTokenCount();
+            switch (Integer.valueOf(playerBlueTokenCountInKalah).compareTo(playerRedTokenCountInKalah)) {
+                case 0 -> game.setStatus(GameStatus.GAME_OVER_DRAW);
                 case 1 -> {
-                    game.setStatus(GameStatus.OVER);
+                    game.setStatus(GameStatus.GAME_OVER);
                     game.setWinner(PlayerSide.BLUE);
                 }
                 case -1 -> {
-                    game.setStatus(GameStatus.OVER);
+                    game.setStatus(GameStatus.GAME_OVER);
                     game.setWinner(PlayerSide.RED);
                 }
             }
@@ -31,7 +31,7 @@ public class Rule7GameOver implements Ruleable {
         return Optional.empty();
     }
 
-    private boolean isGameOverForPlayer(Game game, PlayerSide playerSide) {
+    private boolean isAllNonKalahPitsOfPlayerEmpty(Game game, PlayerSide playerSide) {
         return game.getBoards().values()
                 .stream()
                 .filter(board -> playerSide.equals(board.getPlayerSide()))

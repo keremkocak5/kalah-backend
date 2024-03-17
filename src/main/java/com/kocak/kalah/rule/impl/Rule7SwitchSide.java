@@ -9,9 +9,9 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class Rule6SwitchSide implements Ruleable {
+public class Rule7SwitchSide implements Ruleable {
 
-    private final Rule7GameOver gameOver;
+    private final Rule8GameOver gameOver;
 
     @Override
     public Optional<Ruleable> applyRule(Game game, int pit) {

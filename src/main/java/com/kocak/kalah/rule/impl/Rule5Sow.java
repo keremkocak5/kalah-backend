@@ -9,17 +9,17 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class Rule4Sow implements Ruleable {
+public class Rule5Sow implements Ruleable {
 
-    private final Rule7GameOver rule7GameOver; // kerem check names
-    private final Rule6SwitchSide rule6SwitchSide;
-    private final Rule5Collect rule5Collect;
+    private final Rule8GameOver rule8GameOver; // kerem check names
+    private final Rule7SwitchSide rule7SwitchSide;
+    private final Rule6Collect rule6Collect;
 
     @Override
     public Optional<Ruleable> applyRule(Game game, int pit) {
         int tokenCountBeforeReset = game.getBoards().get(pit).getTokenCount();
         game.getBoards().get(pit).resetTokenCount();
-        int i = pit + 1;
+        int i = pit + 1; // kerem kaldire
         boolean lastIsKalah = false;
         boolean lastIsKalah2 = false;
         while (tokenCountBeforeReset > 0) {
@@ -33,14 +33,16 @@ public class Rule4Sow implements Ruleable {
 
             i++;
         }
+        game.setLastIndex(i-- % game.getEffectivePitCount());
         return Optional.of(getNextRule(lastIsKalah, lastIsKalah2));
     }
 
     private Ruleable getNextRule(boolean lastIsKalah, boolean lastIsZero) {
-        if (lastIsKalah)
-            return rule7GameOver;
-        if (lastIsZero)
-            return rule5Collect;
-        return rule6SwitchSide;
+        if (lastIsKalah) {
+            return rule8GameOver;
+        } else if (lastIsZero) {
+            return rule6Collect;
+        }
+        return rule7SwitchSide;
     }
 }

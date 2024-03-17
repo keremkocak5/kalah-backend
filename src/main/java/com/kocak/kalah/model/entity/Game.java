@@ -85,4 +85,13 @@ public class Game {
         return PlayerSide.BLUE.equals(playerSide) ? this.getPitCount() + 1 : (this.getPitCount() * 2) + 1;
     }
 
+    public int getKalahIndexOfCurrentPlayer() {
+        return PlayerSide.BLUE.equals(this.getTurn()) ? this.getPitCount() + 1 : (this.getPitCount() * 2) + 1;
+    }
+
+    @Transient
+    @Getter
+    @Setter
+    private Integer lastIndex;
+
 }

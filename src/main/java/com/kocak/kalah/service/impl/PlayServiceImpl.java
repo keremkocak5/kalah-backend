@@ -37,7 +37,7 @@ public class PlayServiceImpl implements PlayService {
                 nextRule = nextRule.get().applyRule(game, new Integer(pit));
             }
 
-            return new BoardHeaderResponseDto(game.getBoards().entrySet().stream().map(board -> new BoardResponseDto( // buraya mapper
+            return new BoardHeaderResponseDto(game.getBoards().entrySet().stream().map(board -> new BoardResponseDto( // buraya mapper kerem
                     board.getValue().getId(),
                     board.getValue().getPit(),
                     board.getValue().getTokenCount(),
