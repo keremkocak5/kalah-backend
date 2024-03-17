@@ -12,9 +12,9 @@ public class Util {
     private Util() {
     }
 
-    public static final Predicate<String> IS_STRING_EMPTY = s -> StringUtils.isEmpty(s);
+    public static final Predicate<String> IS_STRING_NOT_EMPTY = s -> StringUtils.isNotEmpty(s);
 
-    public static final Predicate<String> IS_STRING_MAX_50_CHARS = s -> s.length() < 50;
+    public static final Predicate<String> IS_STRING_MAX_50_CHARS = s -> s.length() <= 50;
 
     public static final Predicate<String> IS_STRING_NO_SPECIAL_CHARS = s -> Pattern.matches("^[a-zA-Z0-9 ]*$", s);
 

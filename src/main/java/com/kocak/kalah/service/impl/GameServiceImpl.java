@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.kocak.kalah.Constants.INITIAL_PIT_TOKEN_COUNT;
@@ -38,13 +39,15 @@ public class GameServiceImpl implements GameService {
 
     @Override
     @Transactional
-    public GameResponseDto createGame(CreateGameRequestDto createGameDto) {
+    public GameResponseDto createGame(CreateGameRequestDto createGameRequestDto) {
         try {
-            validateIncomingMessage(createGameDto);
-            Game game = createGameEntity(createGameDto);
-            List<Player> players = createPlayerEntities(createGameDto, game);
-            List<Board> boards = createBoardEntities(game, createGameDto.pitCount());
+            validateIncomingMessage(createGameRequestDto);
+            Game game = createGameEntity(createGameRequestDto);
+            List<Player> players = createPlayerEntities(createGameRequestDto, game);
+            List<Board> boards = createBoardEntities(game, createGameRequestDto.pitCount());
             return convertEntitiesToGameResponseDto(game, players, boards);
+        } catch (KalahValidationException e) {
+            throw e;
         } catch (KalahRuntimeException e) {
             log.warn("An exception during createGame. Exception {} ", e);
             throw e;
@@ -70,12 +73,14 @@ public class GameServiceImpl implements GameService {
     }
 
     private void validateIncomingMessage(CreateGameRequestDto createGameDto) {
-        Arrays.stream(CreateGameRequestDtoValidator.values())
+        Optional<String> validationMessages =  Arrays.stream(CreateGameRequestDtoValidator.values())
                 .map(createGameRequestDtoValidator -> createGameRequestDtoValidator.getInvalidField(createGameDto))
-                .filter(invalidField -> invalidField.isEmpty())
+                .filter(invalidField -> invalidField.isPresent())
                 .map(invalidField -> "[".concat(invalidField.get().concat("]")))
-                .reduce((validationMessage1, validationMessage2) -> validationMessage1.concat(validationMessage2))
-                .ifPresent(validationMessagesCombined -> new KalahValidationException(validationMessagesCombined));
+                .reduce((validationMessage1, validationMessage2) -> validationMessage1.concat(validationMessage2));
+        if (validationMessages.isPresent()) {
+            throw new KalahValidationException(validationMessages.get());
+        }
     }
 
     private List<Player> createPlayerEntities(CreateGameRequestDto createGameDto, Game game) {
@@ -91,7 +96,6 @@ public class GameServiceImpl implements GameService {
         return gameRepository.save(game);
     }
 
-    // kerem bunu board servisine al useri de oyle
     private List<Board> createBoardEntities(Game game, int pitCount) {
         List<Board> boards = new ArrayList<>();
         for (int pit = 0; pit <= 1 + (pitCount * 2); pit++) {
