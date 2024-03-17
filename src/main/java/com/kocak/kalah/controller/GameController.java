@@ -13,8 +13,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.kocak.kalah.Constants.API_VERSION;
+
 @RestController
-@RequestMapping("/game")
+@RequestMapping(API_VERSION + "/game")
 @RequiredArgsConstructor
 public class GameController {
 
@@ -34,7 +36,7 @@ public class GameController {
     @Operation(summary = "Returns an existing game.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Game created."),
-            @ApiResponse(responseCode = "400", description = "Bad request."),
+            @ApiResponse(responseCode = "422", description = "Bad request."),
             @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
     @GetMapping(path = "/game/{game}", produces = MediaType.APPLICATION_JSON_VALUE)

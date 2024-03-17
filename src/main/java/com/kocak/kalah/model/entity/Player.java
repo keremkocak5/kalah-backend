@@ -4,6 +4,7 @@ import com.kocak.kalah.model.enums.PlayerSide;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "PLAYER")
 @Getter
 @EqualsAndHashCode
+@NoArgsConstructor
 public class Player {
 
     @Id

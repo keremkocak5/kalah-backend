@@ -15,14 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.kocak.kalah.Constants.API_VERSION;
+
 @RestController
-@RequestMapping("/play")
+@RequestMapping(API_VERSION + "/play")
 @RequiredArgsConstructor
 public class PlayController {
 
     private final PlayService playService;
 
-    @Operation(summary = "Make a movement.")
+    @Operation(summary = "Makes a movement.", description = "Accepts game id, and pit number to be sowed as arguments.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Movement complete."),
             @ApiResponse(responseCode = "400", description = "Bad request."),

@@ -1,24 +1,27 @@
 package com.kocak.kalah.service.impl;
 
 import com.kocak.kalah.exception.KalahRuntimeException;
+import com.kocak.kalah.exception.KalahValidationException;
 import com.kocak.kalah.model.dto.incoming.CreateGameRequestDto;
 import com.kocak.kalah.model.dto.outgoing.BoardResponseDto;
 import com.kocak.kalah.model.dto.outgoing.GameResponseDto;
 import com.kocak.kalah.model.entity.Board;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.model.entity.Player;
+import com.kocak.kalah.model.enums.CreateGameRequestDtoValidator;
 import com.kocak.kalah.model.enums.ErrorCode;
 import com.kocak.kalah.model.enums.PlayerSide;
 import com.kocak.kalah.repository.BoardRepository;
 import com.kocak.kalah.repository.GameRepository;
 import com.kocak.kalah.repository.PlayerRepository;
 import com.kocak.kalah.service.GameService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,10 +40,14 @@ public class GameServiceImpl implements GameService {
     @Transactional
     public GameResponseDto createGame(CreateGameRequestDto createGameDto) {
         try {
+            validateIncomingMessage(createGameDto);
             Game game = createGameEntity(createGameDto);
             List<Player> players = createPlayerEntities(createGameDto, game);
             List<Board> boards = createBoardEntities(game, createGameDto.pitCount());
             return convertEntitiesToGameResponseDto(game, players, boards);
+        } catch (KalahRuntimeException e) {
+            log.warn("An exception during createGame. Exception {} ", e);
+            throw e;
         } catch (Exception e) {
             log.error("An unexpected exception during createGame. Exception {}", e);
             throw new KalahRuntimeException(ErrorCode.UNKNOWN_ERROR);
@@ -48,31 +55,27 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public GameResponseDto getGame(long gameId) {
         try {
             Game game = gameRepository.findById(gameId).orElseThrow(() -> new KalahRuntimeException(ErrorCode.NO_SUCH_GAME_FOUND));
             return convertEntitiesToGameResponseDto(game, game.getPlayers(), game.getBoards().values().stream().toList());
+        } catch (KalahRuntimeException e) {
+            log.warn("An exception during getGame. Exception {} ", e);
+            throw e;
         } catch (Exception e) {
-            log.error("An unexpected exception during createGame. Exception {}", e);
+            log.error("An unexpected exception during getGame. Exception {}", e);
             throw new KalahRuntimeException(ErrorCode.UNKNOWN_ERROR);
         }
     }
 
-    private GameResponseDto convertEntitiesToGameResponseDto(Game game, List<Player> players, List<Board> boards) {
-        return new GameResponseDto(
-                game.getPitCount(),
-                game.getId(),
-                players.stream().filter(player -> player.isPlayerRed()).findFirst().map(player -> player.getPlayerName()).get(),
-                players.stream().filter(player -> player.isPlayerBlue()).findFirst().map(player -> player.getPlayerName()).get(),
-                game.getTurn(),
-                game.getStatus(),
-                boards.stream()
-                        .map(board -> new BoardResponseDto(board.getId(),
-                                board.getPit(),
-                                board.getTokenCount(),
-                                board.getPlayerSide(),
-                                board.isKalah()))
-                        .collect(Collectors.toUnmodifiableList()));
+    private void validateIncomingMessage(CreateGameRequestDto createGameDto) {
+        Arrays.stream(CreateGameRequestDtoValidator.values())
+                .map(createGameRequestDtoValidator -> createGameRequestDtoValidator.getInvalidField(createGameDto))
+                .filter(invalidField -> invalidField.isEmpty())
+                .map(invalidField -> "[".concat(invalidField.get().concat("]")))
+                .reduce((validationMessage1, validationMessage2) -> validationMessage1.concat(validationMessage2))
+                .ifPresent(validationMessagesCombined -> new KalahValidationException(validationMessagesCombined));
     }
 
     private List<Player> createPlayerEntities(CreateGameRequestDto createGameDto, Game game) {
@@ -97,5 +100,20 @@ public class GameServiceImpl implements GameService {
         return boardRepository.saveAll(boards);
     }
 
-
+    private GameResponseDto convertEntitiesToGameResponseDto(Game game, List<Player> players, List<Board> boards) {
+        return new GameResponseDto(
+                game.getPitCount(),
+                game.getId(),
+                players.stream().filter(player -> player.isPlayerRed()).findFirst().map(player -> player.getPlayerName()).get(),
+                players.stream().filter(player -> player.isPlayerBlue()).findFirst().map(player -> player.getPlayerName()).get(),
+                game.getTurn(),
+                game.getStatus(),
+                boards.stream()
+                        .map(board -> new BoardResponseDto(board.getId(),
+                                board.getPit(),
+                                board.getTokenCount(),
+                                board.getPlayerSide(),
+                                board.isKalah()))
+                        .collect(Collectors.toUnmodifiableList()));
+    }
 }
