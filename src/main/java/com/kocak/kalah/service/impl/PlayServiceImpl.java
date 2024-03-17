@@ -33,7 +33,7 @@ public class PlayServiceImpl implements PlayService {
             runGameRuleChain(game, pit);
             return gameToBoardHeaderResponseDto.convertToView(game);
         } catch (KalahRuntimeException e) {
-            log.warn("An exception during makeMove. gameId {} and pit {} and errorCode.", gameId, pit, e.getErrorCode().getErrorId());
+            log.warn("An exception during makeMove. gameId {} and pit {} and errorCode {}.", gameId, pit, e.getErrorCode().getErrorId());
             throw e;
         } catch (Exception e) {
             log.error("An unexpected exception during makeMove. GameId {} and pit {}. Error: {}", gameId, pit, e);

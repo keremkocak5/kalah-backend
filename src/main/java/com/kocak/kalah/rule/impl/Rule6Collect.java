@@ -15,14 +15,15 @@ public class Rule6Collect implements Rulable {
 
     @Override
     public Optional<Rulable> applyRule(Game game, int pit) {
-        int lastIndex = game.getLastIndex();
-        game.getBoards().get(game.getKalahIndexOfCurrentPlayer()).incrementTokenCount(game.getBoards().get(lastIndex).getTokenCount());
-        game.getBoards().get(lastIndex).resetTokenCount(); // metodlari ayir
-
-        game.getBoards().get(game.getKalahIndexOfCurrentPlayer()).incrementTokenCount(game.getBoards().get(game.getOppositePit(lastIndex)).getTokenCount());
-        game.getBoards().get(game.getOppositePit(lastIndex)).resetTokenCount();
+        collectTokensToKalah(game, game.getLastIndex());
+        collectTokensToKalah(game, game.getOppositePit(game.getLastIndex()));
 
         return Optional.of(getNextRule());
+    }
+
+    private void collectTokensToKalah(Game game, int index) {
+        game.getBoards().get(game.getKalahIndexOfCurrentPlayer()).incrementTokenCount(game.getBoards().get(index).getTokenCount());
+        game.getBoards().get(index).resetTokenCount();
     }
 
     private Rulable getNextRule() {

@@ -49,7 +49,7 @@ public class GameServiceImpl implements GameService {
         } catch (KalahValidationException e) {
             throw e;
         } catch (KalahRuntimeException e) {
-            log.warn("An exception during createGame. Exception {} ", e);
+            log.warn("An exception during createGame. Exception {} ", e.getErrorCode().getErrorId());
             throw e;
         } catch (Exception e) {
             log.error("An unexpected exception during createGame. Exception {}", e);
@@ -64,7 +64,7 @@ public class GameServiceImpl implements GameService {
             Game game = gameRepository.findById(gameId).orElseThrow(() -> new KalahRuntimeException(ErrorCode.NO_SUCH_GAME_FOUND));
             return convertEntitiesToGameResponseDto(game, game.getPlayers(), game.getBoards().values().stream().toList());
         } catch (KalahRuntimeException e) {
-            log.warn("An exception during getGame. Exception {} ", e);
+            log.info("An exception during getGame. Exception {} ", e.getErrorCode().getErrorId());
             throw e;
         } catch (Exception e) {
             log.error("An unexpected exception during getGame. Exception {}", e);
@@ -73,13 +73,13 @@ public class GameServiceImpl implements GameService {
     }
 
     private void validateIncomingMessage(CreateGameRequestDto createGameDto) {
-        Optional<String> validationMessages =  Arrays.stream(CreateGameRequestDtoValidator.values())
-                .map(createGameRequestDtoValidator -> createGameRequestDtoValidator.getInvalidField(createGameDto))
-                .filter(invalidField -> invalidField.isPresent())
-                .map(invalidField -> "[".concat(invalidField.get().concat("]")))
-                .reduce((validationMessage1, validationMessage2) -> validationMessage1.concat(validationMessage2));
-        if (validationMessages.isPresent()) {
-            throw new KalahValidationException(validationMessages.get());
+        Optional<String> validationWarningMessages = Arrays.stream(CreateGameRequestDtoValidator.values())
+                .map(createGameRequestDtoValidator -> createGameRequestDtoValidator.getValidationWarningMessage(createGameDto))
+                .filter(validationWarningMessage -> validationWarningMessage.isPresent())
+                .map(validationWarningMessage -> "[".concat(validationWarningMessage.get().concat("]")))
+                .reduce((validationWarningMessage1, validationWarningMessage2) -> validationWarningMessage1.concat(validationWarningMessage2));
+        if (validationWarningMessages.isPresent()) {
+            throw new KalahValidationException(validationWarningMessages.get());
         }
     }
 
@@ -99,7 +99,11 @@ public class GameServiceImpl implements GameService {
     private List<Board> createBoardEntities(Game game, int pitCount) {
         List<Board> boards = new ArrayList<>();
         for (int pit = 0; pit <= 1 + (pitCount * 2); pit++) {
-            boards.add(new Board(game, pit, pit <= pitCount ? PlayerSide.BLUE : PlayerSide.RED, game.isPitKalah(pit) ? 0 : INITIAL_PIT_TOKEN_COUNT, game.isPitKalah(pit)));
+            boards.add(new Board(game,
+                    pit,
+                    pit <= pitCount ? PlayerSide.BLUE : PlayerSide.RED,
+                    game.isPitKalah(pit) ? 0 : INITIAL_PIT_TOKEN_COUNT,
+                    game.isPitKalah(pit)));
         }
         return boardRepository.saveAll(boards);
     }

@@ -24,7 +24,7 @@ public class PlayController {
 
     private final PlayService playService;
 
-    @Operation(summary = "Makes a movement.", description = "Accepts game id, and pit number to be sowed as arguments.")
+    @Operation(summary = "Makes a movement.", description = "Accepts two arguments: Game Id, and the Pit Number to be sowed.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Movement complete."),
             @ApiResponse(responseCode = "400", description = "Bad request."),

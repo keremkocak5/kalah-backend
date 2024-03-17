@@ -11,12 +11,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class Rule5Sow implements Rulable {
 
-    private final Rule8GameOver rule8GameOver; // kerem check names
+    private final Rule8GameOver rule8GameOver;
     private final Rule7SwitchSide rule7SwitchSide;
     private final Rule6Collect rule6Collect;
 
     @Override
-    public Optional<Rulable> applyRule(Game game, int pit) {
+    public Optional<Rulable> applyRule(Game game, int pit) { // kerem dikkat kontrol
         int tokenCountBeforeReset = game.getBoards().get(pit).getTokenCount();
         game.getBoards().get(pit).resetTokenCount();
         boolean lastIsKalah = false;

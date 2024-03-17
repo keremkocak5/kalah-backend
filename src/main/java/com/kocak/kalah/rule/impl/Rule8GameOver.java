@@ -28,6 +28,7 @@ public class Rule8GameOver implements Rulable {
                 }
             }
         }
+
         return Optional.empty();
     }
 
