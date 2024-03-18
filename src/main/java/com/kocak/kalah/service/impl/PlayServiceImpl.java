@@ -5,10 +5,11 @@ import com.kocak.kalah.exception.KalahRuntimeException;
 import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.model.enums.ErrorCode;
+import com.kocak.kalah.model.enums.RuleType;
 import com.kocak.kalah.repository.GameRepository;
 import com.kocak.kalah.rule.Rulable;
-import com.kocak.kalah.rule.impl.Rule0GameActive;
 import com.kocak.kalah.service.PlayService;
+import com.kocak.kalah.service.RuleFactoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class PlayServiceImpl implements PlayService {
 
     private final GameToBoardHeaderResponseDto gameToBoardHeaderResponseDto;
     private final GameRepository gameRepository;
-    private final Rule0GameActive rule0GameActive;
+    private final RuleFactoryService ruleFactoryService;
 
     @Override
     @Transactional
@@ -42,9 +43,10 @@ public class PlayServiceImpl implements PlayService {
     }
 
     private void runGameRuleChain(Game game, int pit) {
-        Optional<Rulable> nextRule = Optional.of(rule0GameActive);
-        while (nextRule.isPresent()) {
-            nextRule = nextRule.get().applyRule(game, pit);
+        Optional<Rulable> rule = ruleFactoryService.getFirstRule();
+        while (rule.isPresent()) {
+            RuleType ruleType = rule.get().applyRule(game, pit);
+            rule = ruleFactoryService.getNextRule(rule.get(), ruleType);
         }
     }
 

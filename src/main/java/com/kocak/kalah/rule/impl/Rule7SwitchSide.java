@@ -1,26 +1,17 @@
 package com.kocak.kalah.rule.impl;
 
 import com.kocak.kalah.model.entity.Game;
+import com.kocak.kalah.model.enums.RuleType;
 import com.kocak.kalah.rule.Rulable;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-@RequiredArgsConstructor
 public class Rule7SwitchSide implements Rulable {
 
-    private final Rule8GameOver gameOver;
-
     @Override
-    public Optional<Rulable> applyRule(Game game, int pit) {
+    public RuleType applyRule(Game game, int pit) {
         game.switchSide();
-
-        return Optional.of(getNextRule());
+        return RuleType.REGULAR;
     }
 
-    private Rulable getNextRule() {
-        return gameOver;
-    }
 }

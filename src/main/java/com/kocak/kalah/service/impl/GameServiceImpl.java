@@ -41,7 +41,7 @@ public class GameServiceImpl implements GameService {
     @Transactional
     public GameResponseDto createGame(CreateGameRequestDto createGameRequestDto) {
         try {
-            validateIncomingMessage(createGameRequestDto);
+            validateCreateGameRequestDto(createGameRequestDto);
             Game game = createGameEntity(createGameRequestDto);
             List<Player> players = createPlayerEntities(createGameRequestDto, game);
             List<Board> boards = createBoardEntities(game, createGameRequestDto.pitCount());
@@ -72,7 +72,7 @@ public class GameServiceImpl implements GameService {
         }
     }
 
-    private void validateIncomingMessage(CreateGameRequestDto createGameDto) {
+    private void validateCreateGameRequestDto(CreateGameRequestDto createGameDto) {
         Optional<String> validationWarningMessages = Arrays.stream(CreateGameRequestDtoValidator.values())
                 .map(createGameRequestDtoValidator -> createGameRequestDtoValidator.getValidationWarningMessage(createGameDto))
                 .filter(validationWarningMessage -> validationWarningMessage.isPresent())

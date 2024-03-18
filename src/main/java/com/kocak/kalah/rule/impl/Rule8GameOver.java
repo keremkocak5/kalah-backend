@@ -3,16 +3,15 @@ package com.kocak.kalah.rule.impl;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.model.enums.GameStatus;
 import com.kocak.kalah.model.enums.PlayerSide;
+import com.kocak.kalah.model.enums.RuleType;
 import com.kocak.kalah.rule.Rulable;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class Rule8GameOver implements Rulable {
 
     @Override
-    public Optional<Rulable> applyRule(Game game, int pit) { // kerem burada hala is var!
+    public RuleType applyRule(Game game, int pit) { // kerem burada hala is var!
         if (isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.BLUE) || isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.RED)) {
             int playerBlueTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.BLUE)).getTokenCount();
             int playerRedTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.RED)).getTokenCount();
@@ -28,8 +27,7 @@ public class Rule8GameOver implements Rulable {
                 }
             }
         }
-
-        return Optional.empty();
+        return RuleType.REGULAR;
     }
 
     private boolean isAllNonKalahPitsOfPlayerEmpty(Game game, PlayerSide playerSide) {
