@@ -86,8 +86,8 @@ public class GameServiceImpl implements GameService {
     private List<Player> createPlayerEntities(CreateGameRequestDto createGameDto, Game game) {
         return playerRepository.saveAll(
                 List.of(
-                        new Player(game, PlayerSide.BLUE, createGameDto.playerBlueName()),
-                        new Player(game, PlayerSide.RED, createGameDto.playerRedName())
+                        new Player(game.getId(), PlayerSide.BLUE, createGameDto.playerBlueName()),
+                        new Player(game.getId(), PlayerSide.RED, createGameDto.playerRedName())
                 ));
     }
 

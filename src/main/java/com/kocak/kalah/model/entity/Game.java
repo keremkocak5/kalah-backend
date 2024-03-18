@@ -52,7 +52,7 @@ public class Game {
     @MapKeyColumn(name = "PIT")
     private Map<Integer, Board> boards;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "gameId")
     private List<Player> players;
 
     public Game(int pitCount) {
@@ -86,7 +86,7 @@ public class Game {
     }
 
     public int getKalahIndexOfCurrentPlayer() {
-        return PlayerSide.BLUE.equals(this.getTurn()) ? this.getPitCount()  : (this.getPitCount() * 2) + 1;
+        return PlayerSide.BLUE.equals(this.getTurn()) ? this.getPitCount() : (this.getPitCount() * 2) + 1;
     }
 
     @Transient
