@@ -31,8 +31,8 @@ public class RuleFactoryServiceImpl implements RuleFactoryService {
     }
 
     @Override
-    public Optional<Rulable> getNextRule(Rulable rulable, RuleType ruleType) {
-        return Optional.ofNullable(switch (rulable) {
+    public Optional<Rulable> getNextRule(Rulable currentRule, RuleType ruleType) {
+        return Optional.ofNullable(switch (currentRule) {
             case Rule0GameActive i -> rule1ValidPit;
             case Rule1ValidPit i -> rule2UsersTurn;
             case Rule2UsersTurn i -> rule3TokenCountZero;

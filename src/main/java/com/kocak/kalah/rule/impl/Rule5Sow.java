@@ -21,13 +21,13 @@ public class Rule5Sow implements Rulable {
             }
             if (game.getBoards().get(pit % game.getEffectivePitCount()).isKalah()) {
                 ruleType = RuleType.LAST_PIT_KALAH;
-            } else if (!game.getBoards().get(pit % game.getEffectivePitCount()).isKalah() && game.getBoards().get(pit % game.getEffectivePitCount()).getTokenCount() == 0 && game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) {
+            } else if (game.getBoards().get(pit % game.getEffectivePitCount()).getTokenCount() == 0 && game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) {
                 ruleType = RuleType.LAST_PIT_EMPTY;
             }
             game.getBoards().get(pit % game.getEffectivePitCount()).incrementTokenCount();
             tokenCountBeforeReset--;
         }
-        game.setLastIndex(pit - 1 % game.getEffectivePitCount());
+        game.setLastIndex(pit % game.getEffectivePitCount());
         return ruleType;
     }
 

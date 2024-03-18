@@ -7,8 +7,8 @@ import java.util.Optional;
 
 public interface RuleFactoryService {
 
-    Optional<Rulable> getNextRule(Rulable rulable, RuleType ruleType);
-
     Optional<Rulable> getFirstRule();
+
+    Optional<Rulable> getNextRule(Rulable currentRule, RuleType ruleType);
 
 }

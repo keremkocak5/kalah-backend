@@ -82,11 +82,11 @@ public class Game {
     }
 
     public int getKalahIndex(PlayerSide playerSide) {
-        return PlayerSide.BLUE.equals(playerSide) ? this.getPitCount() + 1 : (this.getPitCount() * 2) + 1;
+        return PlayerSide.BLUE.equals(playerSide) ? this.getPitCount() : (this.getPitCount() * 2) + 1;
     }
 
     public int getKalahIndexOfCurrentPlayer() {
-        return PlayerSide.BLUE.equals(this.getTurn()) ? this.getPitCount() + 1 : (this.getPitCount() * 2) + 1;
+        return PlayerSide.BLUE.equals(this.getTurn()) ? this.getPitCount()  : (this.getPitCount() * 2) + 1;
     }
 
     @Transient

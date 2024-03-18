@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class Rule6Collect implements Rulable {
 
-
     @Override
     public RuleType applyRule(Game game, int pit) {
         collectTokensToKalah(game, game.getLastIndex());
