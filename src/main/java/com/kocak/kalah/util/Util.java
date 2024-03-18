@@ -26,25 +26,4 @@ public class Util {
 
     public static final Predicate<Integer> IS_INTEGER_BETWEEN_1_AND_10 = i -> i >= 1 && i <= 10;
 
-
-    // gelen talebi valide et: oyun var mi?
-    // oyun varsa, talep edilen pit numarasi kisiye ozel mi? kisiye ozelse, dolu mu? oyun statusu nedir
-    // oyna.
-    // kontrolleri yap, ucluyu calistir
-    // oyuncu degismesi gerekiyorsa degistir
-    // oyun bitti mi diye kontrol et. kazanma varsa kazanma operasyonu
-    // board geri dondur
-    // id uuid olsun mu
-    // foreing key falan
-    // kerem onyuze regex val ekle
-
-    // mysql kaldir
-    // secur'ty bak
-// onyuz isimler iki comp olsun
-    // onyuz test
-    // db index ekle
-
-    // problem details
-    // docker
-    // test container
 }

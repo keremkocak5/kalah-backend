@@ -4,7 +4,6 @@ import com.kocak.kalah.model.dto.incoming.CreateGameRequestDto;
 import com.kocak.kalah.model.dto.outgoing.GameResponseDto;
 import com.kocak.kalah.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.NonNull;
@@ -23,7 +22,7 @@ public class GameController {
 
     private final GameService gameService;
 
-    @Operation(summary = "Creates a new Kalah game.", description = "Accepts CreateGameRequestDto object as request body.")
+    @Operation(summary = "Creates a new Kalah game.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Game created."),
             @ApiResponse(responseCode = "400", description = "Bad request."),
@@ -41,7 +40,7 @@ public class GameController {
             @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
     @GetMapping(path = "/game/{game}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<GameResponseDto> getGame(@NonNull @Schema(description = "Game Id. Integers only.", example = "1234") @PathVariable(value = "game") long gameId) {
+    ResponseEntity<GameResponseDto> getGame(@NonNull @PathVariable(value = "game") long gameId) {
         return new ResponseEntity<>(gameService.getGame(gameId), HttpStatus.OK);
     }
 

@@ -3,7 +3,6 @@ package com.kocak.kalah.controller;
 import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
 import com.kocak.kalah.service.PlayService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.NonNull;
@@ -33,8 +32,8 @@ public class PlayController {
             @ApiResponse(responseCode = "500", description = "Internal server error.")
     })
     @PostMapping(path = "/game/{game}/pit/{pit}", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<BoardHeaderResponseDto> makeMove(@NonNull @Schema(description = "Game Id. Integers only.", example = "1234") @PathVariable(value = "game") long gameId,
-                                                    @NonNull @Schema(description = "Pit Number. Integers only.", example = "3") @PathVariable(value = "pit") int pit) {
+    ResponseEntity<BoardHeaderResponseDto> makeMove(@NonNull @PathVariable(value = "game") long gameId,
+                                                    @NonNull @PathVariable(value = "pit") int pit) {
         return new ResponseEntity<>(playService.makeMove(gameId, pit), HttpStatus.OK);
     }
 
