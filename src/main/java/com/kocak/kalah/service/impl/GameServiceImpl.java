@@ -15,7 +15,6 @@ import com.kocak.kalah.repository.BoardRepository;
 import com.kocak.kalah.repository.GameRepository;
 import com.kocak.kalah.repository.PlayerRepository;
 import com.kocak.kalah.service.GameService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,16 +25,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.kocak.kalah.Constants.INITIAL_PIT_TOKEN_COUNT;
-
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class GameServiceImpl implements GameService {
 
     private final GameRepository gameRepository;
     private final PlayerRepository playerRepository;
     private final BoardRepository boardRepository;
+    private final int initialPitTokenCountBean;
+
+    public GameServiceImpl(GameRepository gameRepository, PlayerRepository playerRepository, BoardRepository boardRepository, int initialPitTokenCountBean) {
+        this.gameRepository = gameRepository;
+        this.playerRepository = playerRepository;
+        this.boardRepository = boardRepository;
+        this.initialPitTokenCountBean = initialPitTokenCountBean;
+    }
 
     @Override
     @Transactional
@@ -102,7 +106,7 @@ public class GameServiceImpl implements GameService {
             boards.add(new Board(game,
                     pit,
                     pit <= pitCount ? PlayerSide.BLUE : PlayerSide.RED,
-                    game.isPitKalah(pit) ? 0 : INITIAL_PIT_TOKEN_COUNT,
+                    game.isPitKalah(pit) ? 0 : initialPitTokenCountBean,
                     game.isPitKalah(pit)));
         }
         return boardRepository.saveAll(boards);

@@ -9,26 +9,39 @@ import org.springframework.stereotype.Service;
 public class Rule5Sow implements Rulable {
 
     @Override
-    public RuleType applyRule(Game game, int pit) { // kerem dikkat kontrol
+    public RuleType applyRule(Game game, int pit) {
         int tokenCountBeforeReset = game.getBoards().get(pit).getTokenCount();
         game.getBoards().get(pit).resetTokenCount();
-        RuleType ruleType = RuleType.REGULAR;
+        RuleType lastPitRuleType = RuleType.REGULAR;
         while (tokenCountBeforeReset > 0) {
-            ruleType = RuleType.REGULAR;
             pit++;
-            if (game.getBoards().get(pit % game.getEffectivePitCount()).isKalah() && !game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) { // kerem buralar elden gecsin
-                pit++;
-            }
-            if (game.getBoards().get(pit % game.getEffectivePitCount()).isKalah()) {
-                ruleType = RuleType.LAST_PIT_KALAH;
-            } else if (game.getBoards().get(pit % game.getEffectivePitCount()).getTokenCount() == 0 && game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) {
-                ruleType = RuleType.LAST_PIT_EMPTY;
-            }
+            pit = skipPitIfOtherPlayersKalah(game, pit);
+            lastPitRuleType = getLastPitRuleType(game, pit, tokenCountBeforeReset);
             game.getBoards().get(pit % game.getEffectivePitCount()).incrementTokenCount();
             tokenCountBeforeReset--;
         }
         game.setLastIndex(pit % game.getEffectivePitCount());
-        return ruleType;
+        return lastPitRuleType;
+    }
+
+    private RuleType getLastPitRuleType(Game game, int pit, int tokenCountBeforeReset) {
+        if (tokenCountBeforeReset == 1) {
+            if (game.getBoards().get(pit % game.getEffectivePitCount()).isKalah()) {
+                return RuleType.LAST_PIT_KALAH;
+            } else if (game.getBoards().get(pit % game.getEffectivePitCount()).getTokenCount() == 0 && game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) {
+                return RuleType.LAST_PIT_EMPTY;
+            } else {
+                return RuleType.REGULAR;
+            }
+        }
+        return RuleType.REGULAR;
+    }
+
+    private int skipPitIfOtherPlayersKalah(Game game, int pit) {
+        if (game.getBoards().get(pit % game.getEffectivePitCount()).isKalah() && !game.getBoards().get(pit % game.getEffectivePitCount()).getPlayerSide().equals(game.getTurn())) { // kerem buralar elden gecsin
+            pit++;
+        }
+        return pit;
     }
 
 }

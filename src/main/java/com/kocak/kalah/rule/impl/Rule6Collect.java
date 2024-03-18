@@ -10,7 +10,7 @@ public class Rule6Collect implements Rulable {
 
     @Override
     public RuleType applyRule(Game game, int pit) {
-        collectTokensToKalah(game, game.getLastIndex());
+        collectTokensToKalah(game, game.getLastIndex()); // kerem bunda defect var
         collectTokensToKalah(game, game.getOppositePit(game.getLastIndex()));
         return RuleType.REGULAR;
     }

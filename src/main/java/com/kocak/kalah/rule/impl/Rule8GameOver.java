@@ -1,5 +1,6 @@
 package com.kocak.kalah.rule.impl;
 
+import com.kocak.kalah.model.entity.Board;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.model.enums.GameStatus;
 import com.kocak.kalah.model.enums.PlayerSide;
@@ -13,6 +14,7 @@ public class Rule8GameOver implements Rulable {
     @Override
     public RuleType applyRule(Game game, int pit) { // kerem burada hala is var!
         if (isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.BLUE) || isAllNonKalahPitsOfPlayerEmpty(game, PlayerSide.RED)) {
+            moveAllPitTokensToKalahs(game);
             int playerBlueTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.BLUE)).getTokenCount();
             int playerRedTokenCountInKalah = game.getBoards().get(game.getKalahIndex(PlayerSide.RED)).getTokenCount();
             switch (Integer.valueOf(playerBlueTokenCountInKalah).compareTo(playerRedTokenCountInKalah)) {
@@ -38,6 +40,14 @@ public class Rule8GameOver implements Rulable {
                 .filter(board -> board.getTokenCount() > 0)
                 .findAny()
                 .isEmpty();
+    }
+
+    private void moveAllPitTokensToKalahs(Game game) {
+        for (Board board : game.getBoards().values()) {
+            if (!board.isKalah() && board.getTokenCount() >= 1) {
+                game.getBoards().get(game.getKalahIndex(board.getPlayerSide())).incrementTokenCount(board.getTokenCount());
+            }
+        }
     }
 
 }

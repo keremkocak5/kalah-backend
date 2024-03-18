@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.stream.Collectors;
 
 @Service
-public class GameToBoardHeaderResponseDto implements DomainToViewConvertable<Game, BoardHeaderResponseDto> {
+public class GameToBoardHeaderResponseDtoConverterImpl implements DomainToViewConvertable<Game, BoardHeaderResponseDto> {
     @Override
     public BoardHeaderResponseDto convertToView(Game game) {
         return new BoardHeaderResponseDto(game
@@ -23,6 +23,9 @@ public class GameToBoardHeaderResponseDto implements DomainToViewConvertable<Gam
                         board.getValue().getPlayerSide(),
                         board.getValue().isKalah()
                 ))
-                .collect(Collectors.toUnmodifiableList()), game.getTurn());
+                .collect(Collectors.toUnmodifiableList()),
+                game.getTurn(),
+                game.getStatus(),
+                game.getWinner());
     }
 }

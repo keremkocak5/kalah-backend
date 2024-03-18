@@ -1,6 +1,6 @@
 package com.kocak.kalah.service.impl;
 
-import com.kocak.kalah.converter.impl.GameToBoardHeaderResponseDto;
+import com.kocak.kalah.converter.impl.GameToBoardHeaderResponseDtoConverterImpl;
 import com.kocak.kalah.exception.KalahRuntimeException;
 import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
 import com.kocak.kalah.model.entity.Game;
@@ -22,7 +22,7 @@ import java.util.Optional;
 @Slf4j
 public class PlayServiceImpl implements PlayService {
 
-    private final GameToBoardHeaderResponseDto gameToBoardHeaderResponseDto;
+    private final GameToBoardHeaderResponseDtoConverterImpl gameToBoardHeaderResponseDtoConverterImpl;
     private final GameRepository gameRepository;
     private final RuleFactoryService ruleFactoryService;
 
@@ -32,7 +32,7 @@ public class PlayServiceImpl implements PlayService {
         try {
             Game game = findGameOrThrowException(gameId);
             runGameRuleChain(game, pit);
-            return gameToBoardHeaderResponseDto.convertToView(game);
+            return gameToBoardHeaderResponseDtoConverterImpl.convertToView(game);
         } catch (KalahRuntimeException e) {
             log.warn("An exception during makeMove. gameId {} and pit {} and errorCode {}.", gameId, pit, e.getErrorCode().getErrorId());
             throw e;
