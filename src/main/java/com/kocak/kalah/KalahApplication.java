@@ -12,6 +12,10 @@ public class KalahApplication {
     // secur'ty bak
     // onyuz isimler iki comp olsun
     // onyuz test kerem kerem dikkat
+    // iki kullanici ile dene
+    // dockerfile gereksiz bilgi var mi
+
+    // paginated game list
 
 
     public static void main(String[] args) {

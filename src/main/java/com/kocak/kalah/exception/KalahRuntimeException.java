@@ -1,14 +1,14 @@
 package com.kocak.kalah.exception;
 
-import com.kocak.kalah.model.enums.ErrorCode;
+import com.kocak.kalah.model.enums.KalahError;
 import lombok.Getter;
 
 public class KalahRuntimeException extends RuntimeException {
 
     @Getter
-    private final ErrorCode errorCode;
+    private final KalahError kalahError;
 
-    public KalahRuntimeException(ErrorCode errorCode) {
-        this.errorCode = errorCode;
+    public KalahRuntimeException(KalahError kalahError) {
+        this.kalahError = kalahError;
     }
 }

@@ -1,10 +1,10 @@
 package com.kocak.kalah.service.impl;
 
-import com.kocak.kalah.converter.impl.GameToBoardHeaderResponseDtoConverterImpl;
+import com.kocak.kalah.converter.DomainToViewConvertable;
 import com.kocak.kalah.exception.KalahRuntimeException;
 import com.kocak.kalah.model.dto.outgoing.BoardHeaderResponseDto;
 import com.kocak.kalah.model.entity.Game;
-import com.kocak.kalah.model.enums.ErrorCode;
+import com.kocak.kalah.model.enums.KalahError;
 import com.kocak.kalah.model.enums.RuleType;
 import com.kocak.kalah.repository.GameRepository;
 import com.kocak.kalah.rule.Rulable;
@@ -22,7 +22,7 @@ import java.util.Optional;
 @Slf4j
 public class PlayServiceImpl implements PlayService {
 
-    private final GameToBoardHeaderResponseDtoConverterImpl gameToBoardHeaderResponseDtoConverterImpl;
+    private final DomainToViewConvertable<Game, BoardHeaderResponseDto> domainToViewConvertable;
     private final GameRepository gameRepository;
     private final RuleFactoryService ruleFactoryService;
 
@@ -32,13 +32,13 @@ public class PlayServiceImpl implements PlayService {
         try {
             Game game = findGameOrThrowException(gameId);
             runGameRuleChain(game, pit);
-            return gameToBoardHeaderResponseDtoConverterImpl.convertToView(game);
+            return domainToViewConvertable.convertToView(game);
         } catch (KalahRuntimeException e) {
-            log.warn("An exception during makeMove. gameId {} and pit {} and errorCode {}.", gameId, pit, e.getErrorCode().getErrorId());
+            log.info("An exception during makeMove. gameId {} and pit {} and errorCode {}.", gameId, pit, e.getKalahError().getErrorId());
             throw e;
         } catch (Exception e) {
             log.error("An unexpected exception during makeMove. GameId {} and pit {}. Error: {}", gameId, pit, e);
-            throw new KalahRuntimeException(ErrorCode.UNKNOWN_ERROR);
+            throw new KalahRuntimeException(KalahError.UNKNOWN_ERROR);
         }
     }
 
@@ -51,7 +51,7 @@ public class PlayServiceImpl implements PlayService {
     }
 
     private Game findGameOrThrowException(long gameId) {
-        return gameRepository.findById(gameId).orElseThrow(() -> new KalahRuntimeException(ErrorCode.NO_SUCH_GAME_FOUND));
+        return gameRepository.findById(gameId).orElseThrow(() -> new KalahRuntimeException(KalahError.NO_SUCH_GAME_FOUND));
     }
 
 }

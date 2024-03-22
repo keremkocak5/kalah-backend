@@ -9,7 +9,7 @@ import com.kocak.kalah.model.entity.Board;
 import com.kocak.kalah.model.entity.Game;
 import com.kocak.kalah.model.entity.Player;
 import com.kocak.kalah.model.enums.CreateGameRequestDtoValidator;
-import com.kocak.kalah.model.enums.ErrorCode;
+import com.kocak.kalah.model.enums.KalahError;
 import com.kocak.kalah.model.enums.PlayerSide;
 import com.kocak.kalah.repository.BoardRepository;
 import com.kocak.kalah.repository.GameRepository;
@@ -53,26 +53,26 @@ public class GameServiceImpl implements GameService {
         } catch (KalahValidationException e) {
             throw e;
         } catch (KalahRuntimeException e) {
-            log.warn("An exception during createGame. Exception {} ", e.getErrorCode().getErrorId());
+            log.info("An exception during createGame. Exception {} ", e.getKalahError().getErrorId());
             throw e;
         } catch (Exception e) {
             log.error("An unexpected exception during createGame. Exception {}", e);
-            throw new KalahRuntimeException(ErrorCode.UNKNOWN_ERROR);
+            throw new KalahRuntimeException(KalahError.UNKNOWN_ERROR);
         }
     }
 
     @Override
     @Transactional(readOnly = true)
     public GameResponseDto getGame(long gameId) {
-        try {
-            Game game = gameRepository.findById(gameId).orElseThrow(() -> new KalahRuntimeException(ErrorCode.NO_SUCH_GAME_FOUND));
+        try { // kerem bunda exception firlatma
+            Game game = gameRepository.findById(gameId).orElseThrow(() -> new KalahRuntimeException(KalahError.NO_SUCH_GAME_FOUND));
             return convertEntitiesToGameResponseDto(game, game.getPlayers(), game.getBoards().values().stream().toList());
         } catch (KalahRuntimeException e) {
-            log.info("An exception during getGame. Exception {} ", e.getErrorCode().getErrorId());
+            log.info("An exception during getGame. Exception {} ", e.getKalahError().getErrorId());
             throw e;
         } catch (Exception e) {
             log.error("An unexpected exception during getGame. Exception {}", e);
-            throw new KalahRuntimeException(ErrorCode.UNKNOWN_ERROR);
+            throw new KalahRuntimeException(KalahError.UNKNOWN_ERROR);
         }
     }
 
@@ -120,6 +120,7 @@ public class GameServiceImpl implements GameService {
                 players.stream().filter(player -> player.isPlayerBlue()).findFirst().map(player -> player.getPlayerName()).get(),
                 game.getTurn(),
                 game.getStatus(),
+                game.getWinner(),
                 boards.stream()
                         .map(board -> new BoardResponseDto(board.getId(),
                                 board.getPit(),

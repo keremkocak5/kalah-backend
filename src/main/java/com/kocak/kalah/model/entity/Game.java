@@ -66,7 +66,7 @@ public class Game {
     }
 
     public void switchSide() {
-        this.turn = this.getTurn().nextSide();
+        this.turn = this.getTurn().getNextSide();
     }
 
     public boolean isActive() {

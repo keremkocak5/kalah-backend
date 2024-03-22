@@ -14,8 +14,7 @@ public class Rule5Sow implements Rulable {
         game.getBoards().get(pit).resetTokenCount();
         RuleType lastPitRuleType = RuleType.REGULAR;
         while (tokenCountBeforeReset > 0) {
-            pit++;
-            pit = skipPitIfOtherPlayersKalah(game, pit);
+            pit = skipPitIfOtherPlayersKalah(game, ++pit);
             lastPitRuleType = getLastPitRuleType(game, pit, tokenCountBeforeReset);
             game.getBoards().get(pit % game.getEffectivePitCount()).incrementTokenCount();
             tokenCountBeforeReset--;

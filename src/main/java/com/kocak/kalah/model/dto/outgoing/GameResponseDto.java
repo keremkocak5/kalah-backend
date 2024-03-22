@@ -12,5 +12,6 @@ public record GameResponseDto(@NonNull int pitCount,
                               @NonNull String playerBlueName,
                               @NonNull PlayerSide turn,
                               @NonNull GameStatus status,
+                              PlayerSide winner,
                               @NonNull List<BoardResponseDto> boardResponseDtos) {
 }

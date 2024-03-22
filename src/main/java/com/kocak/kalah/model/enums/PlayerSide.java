@@ -5,7 +5,7 @@ public enum PlayerSide {
     BLUE,
     RED;
 
-    public PlayerSide nextSide() {
+    public PlayerSide getNextSide() {
         return this.equals(RED) ? BLUE : RED;
     }
 

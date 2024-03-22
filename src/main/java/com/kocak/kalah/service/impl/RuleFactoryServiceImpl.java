@@ -1,7 +1,7 @@
 package com.kocak.kalah.service.impl;
 
 import com.kocak.kalah.exception.KalahRuntimeException;
-import com.kocak.kalah.model.enums.ErrorCode;
+import com.kocak.kalah.model.enums.KalahError;
 import com.kocak.kalah.model.enums.RuleType;
 import com.kocak.kalah.rule.Rulable;
 import com.kocak.kalah.rule.impl.*;
@@ -46,7 +46,7 @@ public class RuleFactoryServiceImpl implements RuleFactoryService {
             case Rule6Collect i -> rule7SwitchSide;
             case Rule7SwitchSide i -> rule8GameOver;
             case Rule8GameOver i -> null;
-            default -> throw new KalahRuntimeException(ErrorCode.UNKNOWN_RULE);
+            default -> throw new KalahRuntimeException(KalahError.UNKNOWN_RULE);
         });
     }
 

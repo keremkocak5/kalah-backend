@@ -18,12 +18,12 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {KalahRuntimeException.class})
     protected ProblemDetail handleKalahRuntimeException(KalahRuntimeException e) {
-        return ProblemDetail.forStatusAndDetail(e.getErrorCode().getHttpStatus(), e.getErrorCode().getErrorMessage());
+        return ProblemDetail.forStatusAndDetail(e.getKalahError().getHttpStatus(), e.getKalahError().getErrorMessage());
     }
 
     @ExceptionHandler(value = {Exception.class})
     protected ProblemDetail handleException(Exception e) {
-        return ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), e.getMessage());
+        return ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), e.getMessage()); // kerem buraya static error mesaji koy
     }
 
 }

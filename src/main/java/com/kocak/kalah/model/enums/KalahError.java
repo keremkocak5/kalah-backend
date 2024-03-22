@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 @Getter
-public enum ErrorCode {
+public enum KalahError {
 
     NO_SUCH_GAME_FOUND("E0000", "This game does not exist.", HttpStatus.UNPROCESSABLE_ENTITY),
     GAME_NOT_ACTIVE("E0001", "This game is already over.", HttpStatus.UNPROCESSABLE_ENTITY),
@@ -20,7 +20,7 @@ public enum ErrorCode {
     private final String errorMessage;
     private final HttpStatusCode httpStatus;
 
-    ErrorCode(String errorId, String errorMessage, HttpStatus httpStatus) {
+    KalahError(String errorId, String errorMessage, HttpStatus httpStatus) {
         this.errorId = errorId;
         this.errorMessage = errorMessage;
         this.httpStatus = httpStatus;
