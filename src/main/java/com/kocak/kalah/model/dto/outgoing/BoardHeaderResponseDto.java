@@ -2,12 +2,12 @@ package com.kocak.kalah.model.dto.outgoing;
 
 import com.kocak.kalah.model.enums.GameStatus;
 import com.kocak.kalah.model.enums.PlayerSide;
-import lombok.NonNull;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
-public record BoardHeaderResponseDto(@NonNull List<BoardResponseDto> boardResponseDtos,
-                                     @NonNull PlayerSide turn,
-                                     @NonNull GameStatus gameStatus,
+public record BoardHeaderResponseDto(@NotBlank List<BoardResponseDto> boardResponseDtos,
+                                     @NotBlank PlayerSide turn,
+                                     @NotBlank GameStatus gameStatus,
                                      PlayerSide winner) {
 }

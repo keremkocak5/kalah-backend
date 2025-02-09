@@ -2,16 +2,16 @@ package com.kocak.kalah.model.dto.outgoing;
 
 import com.kocak.kalah.model.enums.GameStatus;
 import com.kocak.kalah.model.enums.PlayerSide;
-import lombok.NonNull;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
-public record GameResponseDto(@NonNull int pitCount,
-                              @NonNull long id,
-                              @NonNull String playerRedName,
-                              @NonNull String playerBlueName,
-                              @NonNull PlayerSide turn,
-                              @NonNull GameStatus status,
+public record GameResponseDto(@NotBlank int pitCount,
+                              @NotBlank long id,
+                              @NotBlank String playerRedName,
+                              @NotBlank String playerBlueName,
+                              @NotBlank PlayerSide turn,
+                              @NotBlank GameStatus status,
                               PlayerSide winner,
-                              @NonNull List<BoardResponseDto> boardResponseDtos) {
+                              @NotBlank List<BoardResponseDto> boardResponseDtos) {
 }

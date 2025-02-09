@@ -10,10 +10,9 @@ public class KalahApplication {
     // kerem onyuze regex val ekle
     // mysql kaldir
     // secur'ty bak
-    // onyuz isimler iki comp olsun
     // onyuz test kerem kerem dikkat
     // iki kullanici ile dene
-    // dockerfile gereksiz bilgi var mi
+    // dockerfile gereksiz bilgi var mi ve profiller aktif oluyorlar mi 
 
     // paginated game list
 

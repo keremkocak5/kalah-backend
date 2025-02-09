@@ -1,8 +1,8 @@
 package com.kocak.kalah.model.dto.incoming;
 
-import lombok.NonNull;
+import jakarta.validation.constraints.NotBlank;
 
-public record CreateGameRequestDto(@NonNull String playerBlueName,
-                                   @NonNull String playerRedName,
-                                   @NonNull int pitCount) {
+public record CreateGameRequestDto(@NotBlank String playerBlueName,
+                                   @NotBlank String playerRedName,
+                                   @NotBlank int pitCount) {
 }

@@ -1,11 +1,11 @@
 package com.kocak.kalah.model.dto.outgoing;
 
 import com.kocak.kalah.model.enums.PlayerSide;
-import lombok.NonNull;
+import jakarta.validation.constraints.NotBlank;
 
-public record BoardResponseDto(@NonNull long id,
-                               @NonNull int pit,
-                               @NonNull int tokenCount,
-                               @NonNull PlayerSide playerSide,
-                               @NonNull boolean isKalah) {
+public record BoardResponseDto(@NotBlank long id,
+                               @NotBlank int pit,
+                               @NotBlank int tokenCount,
+                               @NotBlank PlayerSide playerSide,
+                               @NotBlank boolean isKalah) {
 }

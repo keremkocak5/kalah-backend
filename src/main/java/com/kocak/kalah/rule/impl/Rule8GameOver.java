@@ -54,6 +54,7 @@ public class Rule8GameOver implements Rulable {
         for (Board board : game.getBoards().values()) {
             if (!board.isKalah() && board.getTokenCount() >= 1) {
                 game.getBoards().get(game.getKalahIndex(board.getPlayerSide())).incrementTokenCount(board.getTokenCount());
+                board.resetTokenCount();
             }
         }
     }

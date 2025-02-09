@@ -3,8 +3,8 @@ package com.kocak.kalah.util;
 import com.kocak.kalah.model.enums.PlayerSide;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Random;
 import java.util.function.Predicate;
+import java.util.random.RandomGenerator;
 import java.util.regex.Pattern;
 
 public class Util {
@@ -12,7 +12,7 @@ public class Util {
     private Util() {
     }
 
-    private static final Random randomInstance = new Random();
+    private static final RandomGenerator randomInstance = RandomGenerator.getDefault();
 
     public static final PlayerSide getRandomPlayer() {
         return PlayerSide.values()[randomInstance.nextInt(2)];
